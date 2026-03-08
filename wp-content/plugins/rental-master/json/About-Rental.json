@@ -1,0 +1,219 @@
+{
+    "apartment_leasing": {
+		"1":"12 Month",
+		"2":"Day to Day (Vacation Rental)",
+		"3":"Fixed Term Lease",
+		"4":"Long Term",
+		"5":"Month to Month",
+		"6":"Monthly",
+		"7":"Week to Week (Vacation Rental)",
+		"8":"Year to Year"
+        },
+
+	"apartment_style": {
+        "1":"Apartment",
+		"2":"Courtyard Apartment",
+		"3":"Efficiency",
+		"4":"Flat",
+		"5":"Garden Apartment",
+		"6":"House",
+		"7":"Lakeview Apartment",
+		"8":"Loft",
+		"9":"Loft Apartment",
+		"10":"Mountain View Apartment",
+		"11":"Studio",
+		"12":"Townhouse",
+		"13":"Two Story Flat"
+        },
+
+	"apartment_amenities":{
+        "1":"24-Hour Emergency Maintenance",
+		"2":"Balcony",
+		"3":"Built-in Microwave Oven",
+		"4":"Ceiling Fan",
+		"5":"Central Air Conditioning and Heating",
+		"6":"Dishwasher In Unit",
+		"7":"Energy-efficient appliances",
+		"8":"Fancy Closets",
+		"9":"Fireplace",
+		"10":"Free Wifi",
+		"11":"Furnished",
+		"12":"Gas Cooking",
+		"13":"Granite Countertops",
+		"14":"Gym",
+		"15":"Hardwood Floors",
+		"16":"High-end countertops and finishes",
+		"17":"High-end kitchen appliances",
+		"18":"In Unit Laundry",
+		"19":"In Unit Storage",
+		"20":"Internet Access Included"
+      },
+
+	"apartment_bedrooms": {
+        "1":"1 Bedroom",
+		"2":"2 Bedrooms",
+		"3":"3 Bedrooms",
+		"4":"4 Bedrooms",
+		"5":"5 Bedrooms",
+		"6":"6 Bedrooms",
+		"7":"7 Bedrooms",
+		"8":"8 Bedrooms",
+		"9":"9 Bedrooms",
+		"10":"10 Bedrooms"
+      },
+
+	"apartment_bathrooms": {
+        "1":"1 Bath",
+		"2":"1.5 Baths",
+		"3":"2 Baths",
+		"4":"2.5 Baths",
+		"5":"3 Baths",
+		"6":"3.5 Baths",
+		"7":"4 Baths",
+		"8":"4.5 Baths",
+		"9":"5 Baths"
+    },
+
+	"apartment_area": {
+        "1":"1100 Sq. Ft.",
+		"2":"1200 Sq. Ft.",
+		"3":"1300 Sq. Ft.",
+		"4":"1400 Sq. Ft.",
+		"5":"2000 Sq. Ft.",
+		"6":"2500 Sq. Ft.",
+		"7":"800 Sq. Ft.",
+		"8":"600 Sq. Ft."
+        },
+
+	"apartment_rental_occupancy": {
+        "1":"1 Person",
+		"2":"2 People",
+		"3":"3 People",
+		"4":"4 People",
+		"5":"5 People",
+		"6":"6 People",
+		"7":"7 People",
+		"8":"8 People",
+		"9":"9 People",
+		"10":"10 People"
+     },
+
+	"apartment_utilities": {
+        "1":"All Utilities Included",
+		"2":"Cable TV",
+		"3":"Electricity Included",
+		"4":"Gas Included",
+		"5":"Heat",
+		"6":"High Speed Internet Included",
+		"7":"Trash Removal",
+		"8":"Water Included"
+     },
+
+	"apartment_availability_options": {
+        "1":"Available August 2018",
+		"2":"Available August 2019",
+		"3":"Available Now",
+		"4":"Business Rental – Week to Week",
+		"5":"Month to Month",
+		"6":"Vacation Rental",
+		"7":"Yearly"
+    },
+
+	"apartment_availibility_category": {
+        
+    },
+
+	"apartment_monthly_rent": {
+        "1":"$1200 Per Month",
+		"2":"$550 Per Month",
+		"3":"$800 Per Month",
+		"4":"$1250 Per Month",
+		"5":"$1390 Per Month",
+		"6":"$1489 Per Month",
+		"7":"$1600 Per Month",
+		"8":"$1830 Per Month",
+		"9":"$2000 Per Month",
+		"10":"$2200 Per Month"
+     },
+
+	"community_location": {
+        "1":"Bloomington Indiana – North",
+		"2":"Bloomington Indiana – South",
+		"3":"MIami Florida – East Miami",
+		"4":"Naples Florida – East Naples",
+		"5":"New York City – East Manhattan"
+     },
+
+	"community_type": {
+        "1":"Apartment Building",
+		"2":"City Living Downtown",
+		"3":"Duplex",
+		"4":"Quadplex",
+		"5":"Residential Home",
+		"6":"Retirement Apartment Community",
+		"7":"Student Housing Community",
+		"8":"Triplex"
+     },
+
+	"community_categories": {
+        "1":"Apartment Building Campus",
+		"2":"Apartment Community",
+		"3":"Condominium Community",
+		"4":"Green Living Apartment Community",
+		"5":"Multi-Family Residential Homes",
+		"6":"Residential Home",
+		"7":"Senior Citizen Living Facility",
+		"8":"Single Apartment Building"
+     },
+
+	"community_features": {
+        "1":"40 Acres with Pond, Playground and Gazebo",
+		"2":"Basketball Court",
+		"3":"Bike Rack and Storage",
+		"4":"Business Center",
+		"5":"Clubhouse",
+		"6":"Dog Park Washing Station",
+		"7":"Electric Car Charging Stations",
+		"8":"Free Aerobic Classes",
+		"9":"Guest Parking",
+		"10":"Hot Tub",
+		"11":"Kid’s Art Room",
+		"12":"On Site Parking",
+		"13":"On-Site Maintenance",
+		"14":"Outdoor Grill Area",
+		"15":"Outdoor Picnic Area",
+		"16":"Package Receipt",
+		"17":"Planned Activities",
+		"18":"Recycling Services",
+		"19":"Rooftop Balcony"
+     },
+
+	 "community_owner": {
+       "1":"About Rentals Inc.",
+	   "1":"Generic Rentals, Inc."
+     },
+     "listing_bedrooms": {
+        "1":"1 Bedroom",
+		"2":"2 Bedrooms",
+		"3":"3 Bedrooms",
+		"4":"4 Bedrooms",
+		"5":"5 Bedrooms",
+		"6":"6 Bedrooms",
+		"7":"7 Bedrooms",
+		"8":"8 Bedrooms",
+		"9":"9 Bedrooms",
+		"10":"10 Bedrooms"
+      },
+
+	"listing_bathrooms": {
+        "1":"1 Bath",
+		"2":"1.5 Baths",
+		"3":"2 Baths",
+		"4":"2.5 Baths",
+		"5":"3 Baths",
+		"6":"3.5 Baths",
+		"7":"4 Baths",
+		"8":"4.5 Baths",
+		"9":"5 Baths"
+    }
+}

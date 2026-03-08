@@ -1,0 +1,23 @@
+.trial-notification {text-align:center}
+.trial-notification h2 {color:#df1a1a}
+.cmApts {width:100%;display:block;float:left;height:300px;overflow:auto}
+.cmApts li {display:block;padding:5px;float:left;clear:both;width:97%;background:#f1f1f1;border:1px solid #ddd}
+.cmApts li span{ display:inline-block}
+.cmAptsA{ float:left; width:35%}
+.cmAptsB{ float:right; width:60%}
+.cmAptsA img{ max-width:100%}
+.cmApts a {font-size:12px;float:left;font-weight:700;text-decoration:navajowhite}
+.availHead {margin: 0;}
+.availHead li {background: #fff;	padding: 14px 8px;margin-bottom: 1px;}
+.availHead li span {min-width: 137px;display: inline-block;text-align: center;margin-left: 3px;font-weight: 600;word-wrap: break-word;max-width: 137px;vertical-align:middle}
+.availHead input[type="text"], .availHead select {width: 135px;vertical-align: bottom;}
+
+/**
+ ******************************************************
+ ************** Version 2 Css *************************
+ ******************************************************
+ */
+
+.minWidth{min-width:18% !important;}
+.pr-leasing-left{ float:left;}
+.pr-leasing-right{ float:right;}
