@@ -1,6 +1,6 @@
 <?php
 if(!defined('ABSPATH')) exit;
-class CF_AR_Favorites{
+class RM_Favorites{
 	public static function init(){
         $class = __CLASS__;
         new $class;
@@ -94,7 +94,7 @@ class CF_AR_Favorites{
 		if(isset($wp_session['fav_apartment_id'])){
 			$seeion_arr = $wp_session['fav_apartment_id']->toArray();
 			if(!empty($seeion_arr)){
-				$emailfavid =	About_rental_cf_exe::get_id_by_slug('email-favorites');
+				$emailfavid =	About_rental_rm_exe::get_id_by_slug('email-favorites');
 				$o='<ul class="cmdlist">';
 				foreach($seeion_arr as $pid){
 					$post	=	get_post($pid);
@@ -103,10 +103,10 @@ class CF_AR_Favorites{
 					
 					if(get_post_type($pid)=='apartment'){
 						$aAreaARR			=	wp_get_post_terms($pid,'apartment_area');
-						$aPic				=	get_post_meta($pid,'cf_apartment_pic',true);
+						$aPic				=	get_post_meta($pid,'rm_apartment_pic',true);
 						$bedRoomARR		=	wp_get_post_terms($pid,'apartment_bedrooms');
 						$bathRoomARR		=	wp_get_post_terms($pid,'apartment_bathrooms');
-						$monthlyRent		=	get_post_meta($pid,'cf_apartment_rent_month',true);
+						$monthlyRent		=	get_post_meta($pid,'rm_apartment_rent_month',true);
 						$aAvailableOpARR	=	wp_get_post_terms($pid,'apartment_availability_options');
 						$o.='<li>';
 							$o.='<img class="alignleft size-medium wp-image-43" src="'.$aPic.'" alt="'.$title.'" width="300" height="193" />';
@@ -126,7 +126,7 @@ class CF_AR_Favorites{
 					}
 					if(get_post_type($pid)=='community'){
 						$aAreaARR	=	wp_get_post_terms($pid,'apartment_area');
-						$cmPic		=	get_post_meta($pid,'cf_community_pic',true);
+						$cmPic		=	get_post_meta($pid,'rm_community_pic',true);
 						$ownerARR	=	wp_get_post_terms($pid,'community_owner');
 						$catARR	=	wp_get_post_terms($pid,'community_categories');
 						$typeARR	=	wp_get_post_terms($pid,'community_type',true);
@@ -162,4 +162,4 @@ class CF_AR_Favorites{
 	}
 
 }
-add_action('plugins_loaded',array('CF_AR_Favorites','init')); # To execute class
+add_action('plugins_loaded',array('RM_Favorites','init')); # To execute class

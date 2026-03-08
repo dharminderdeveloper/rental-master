@@ -1,5 +1,5 @@
 /**
- * File Name: about-rental-admin.js
+ * File Name: rental-admin.js
  * *
  * Description: Holds the functions related to plugin is used for both Administrator as well Frontend
  */
@@ -40,30 +40,30 @@ community_APPARTMENTS_POPUP_AJAX();
 
 /**----------------------	FRONT END ----------------------**/
 /**
-*	APPARTMENT_cf_add_to_fav
+*	APPARTMENT_rm_add_to_fav
 *
 */
-APPARTMENT_cf_add_to_fav = function(pid){
+APPARTMENT_rm_add_to_fav = function(pid){
 	$(document).on('click','.apFVT',function(){
 		var pid	=	$(this).attr('id');
 		var st	=	$(this).attr('status');
 		add_to_FAVOURITE_AJAX(pid,st);
 	});
 }
-APPARTMENT_cf_add_to_fav();
+APPARTMENT_rm_add_to_fav();
 
 /**
-*	COMMUNITY_cf_add_to_fav
+*	COMMUNITY_rm_add_to_fav
 *
 */
-COMMUNITY_cf_add_to_fav = function(pid){
+COMMUNITY_rm_add_to_fav = function(pid){
 	$(document).on('click','.cmFVT',function(){
 		var pid	=	$(this).attr('id');
 		var st	=	$(this).attr('status');
 		add_to_FAVOURITE_AJAX(pid,st);
 	});
 }
-COMMUNITY_cf_add_to_fav();
+COMMUNITY_rm_add_to_fav();
 
 /**
 *	add_to_FAVOURITE_AJAX
@@ -90,10 +90,10 @@ var add_to_FAVOURITE_AJAX=function(pid,st){
 }
 
 /**
-*	cf_print_page
+*	rm_print_page
 *	Description: Print whole page
 */
-function cf_print_page() {
+function rm_print_page() {
     window.print();
 }
 /**

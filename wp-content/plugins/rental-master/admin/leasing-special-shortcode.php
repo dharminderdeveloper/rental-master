@@ -22,17 +22,17 @@ function abr_retrieve_all_leasing_ids($posts_per_page) {
 
 function abr_leasing_html($nums){
 	$nums=''? $nums='-1':$nums;
+	$html	=	'';
 	$ids	=	abr_retrieve_all_leasing_ids($nums);
 	
 	if(!empty($ids)){
-		$html	=	'';
 		$html.='<div class="leasingSpecial main">';
 		foreach((array) $ids as $id){
 			$title			=	get_the_title($id);
-			$publish_date 	=	get_post_meta($id,'cf_leasing_publish_date', true);
-			$expire_date 	=	get_post_meta($id,'cf_leasing_expire_date', true);
-			$desc 			=	get_post_meta($id,'cf_leasing_description', true);
-			$aids 			=	get_post_meta($id,'cf_leasing_apartment', true);
+			$publish_date 	=	get_post_meta($id,'rm_leasing_publish_date', true);
+			$expire_date 	=	get_post_meta($id,'rm_leasing_expire_date', true);
+			$desc 			=	get_post_meta($id,'rm_leasing_description', true);
+			$aids 			=	get_post_meta($id,'rm_leasing_apartment', true);
 			$aids 			=	is_array($aids) ? $aids : array($aids);
 			$html.='<div class="leasingSection">';
 				$html.='<h2>'.$title.'</h2>';

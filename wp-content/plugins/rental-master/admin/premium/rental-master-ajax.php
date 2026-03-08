@@ -1,6 +1,6 @@
 <?php
 /**
-**	File : about-renatal-ajax.php	
+**	File : rental-masterenatal-ajax.php	
 */
 	/*
 	* Function:	abr_version_activation_ajax
@@ -58,7 +58,7 @@
 	*/
 	function abr_premium_version_activation($key,$domain){
 	
-		$url =ABR_PLUGIN_MASTER_URL.'wp-admin/admin-ajax.php?action=activation_ajax&key='.$key.'&domain='.$domain;
+		$url =RM_PLUGIN_MASTER_URL.'wp-admin/admin-ajax.php?action=activation_ajax&key='.$key.'&domain='.$domain;
 		$request	=	wp_remote_get($url);
 		$response	=	wp_remote_retrieve_body($request);
 		$obj		=	json_decode($response,true);
@@ -119,13 +119,16 @@
 		$user_info		=	get_userdata(get_current_user_id());
 		$user_email	=	$user_info->user_email;
 		$display_name	=	$user_info->display_name;
-		$to 			=	'info@whiteirondata.com'; //Plugin administration eamil
+		$to 			=	sanitize_email( get_option( 'admin_email' ) );
 		$subject 		=	'New Subscription';
 		
 		$body 			=	'<div style="border: 1px solid #ccc;border-radius: 4px;padding: 30px 0;text-align:center;width:100%;"><img src="'.plugin_dir_url(__FILE__).'../img/master-logo.png" width="186" height="45" style="display: block;margin: 0 auto;">
-			<p style="color: #333;font-size: 18px;margin: 20px 0;"><strong>Congratulations! </strong><b>'.$display_name.'</b> has Successfuly activated About Rentals Plugin.<br><b>User Email:</b> &nbsp;'. $user_email.'<br><b>User Website:</b>&nbsp; <a href="'.get_site_url().' ">'.get_site_url().'</a></p></div>';
+			<p style="color: #333;font-size: 18px;margin: 20px 0;"><strong>Congratulations! </strong><b>'.$display_name.'</b> has Successfuly activated Rental Master Plugin.<br><b>User Email:</b> &nbsp;'. $user_email.'<br><b>User Website:</b>&nbsp; <a href="'.get_site_url().' ">'.get_site_url().'</a></p></div>';
 
-		$headers = array('Content-Type: text/html; charset=UTF-8','From: About Rentals: <info@whiteirondata.com');
+		$headers = array(
+			'Content-Type: text/html; charset=UTF-8',
+			'From: Rental Master <' . $to . '>',
+		);
 		wp_mail( $to, $subject, $body, $headers );
 	}
 
@@ -136,19 +139,22 @@
 	*/
 	 function abr_send_mail_to_user(){
 		
-		$to 		=	get_bloginfo('admin_email');
-		$subject 	=	'About Rentals';
+		$to 		=	sanitize_email( get_option( 'admin_email' ) );
+		$subject 	=	'Rental Master';
 		$body 		=	'
 			<div style="border: 1px solid #ccc;border-radius: 4px;padding: 30px 0;text-align:center;width: 100%;">
-			<img src="'.ABR_PLUGIN_DIR_URL.'img/master-logo.png" width="186" height="45" style="display: block;margin: 0 auto;">
+			<img src="'.RM_PLUGIN_DIR_URL.'img/master-logo.png" width="186" height="45" style="display: block;margin: 0 auto;">
 			<p style="color: #333;font-size: 18px;margin: 20px 0;">
-				<strong>Congratulations! </strong> you have successfuly activated About Rentals
+				<strong>Congratulations! </strong> you have successfuly activated Rental Master
 			</p>
 			<p>For any further query please visit at:
-				<a href="'.ABR_PLUGIN_MASTER_URL.'contact/">'.ABR_PLUGIN_MASTER_URL.'</a>
+				<a href="'.RM_PLUGIN_MASTER_URL.'contact/">'.RM_PLUGIN_MASTER_URL.'</a>
 			</p>
 			</div>';
-		$headers = array('Content-Type: text/html; charset=UTF-8','From: About Rentals: <info@whiteirondata.com');
+		$headers = array(
+			'Content-Type: text/html; charset=UTF-8',
+			'From: Rental Master <' . $to . '>',
+		);
 		
 		 wp_mail( $to, $subject, $body, $headers );
 	}
@@ -178,12 +184,12 @@
 			$availDate	=	sanitize_text_field($_REQUEST['availDate']);
 			$isFeatured=	sanitize_text_field($_REQUEST['isFeatured']);
 			
-			update_post_meta( $id, 'cf_apartment_rent_month', $Rent, false );
-			update_post_meta( $id, 'cf_apartment_no_of_units', $Units, false );
+			update_post_meta( $id, 'rm_apartment_rent_month', $Rent, false );
+			update_post_meta( $id, 'rm_apartment_no_of_units', $Units, false );
 			wp_set_post_terms( $id, $rentRange,'apartment_monthly_rent',false );
-			update_post_meta( $id, 'cf_apartment_featured', $isFeatured, false );
-			update_post_meta( $id, 'cf_apartment_date_available', $availDate, false);
-			update_post_meta( $id, 'cf_apartment_no_of_units_available', $unitAvail, false );
+			update_post_meta( $id, 'rm_apartment_featured', $isFeatured, false );
+			update_post_meta( $id, 'rm_apartment_date_available', $availDate, false);
+			update_post_meta( $id, 'rm_apartment_no_of_units_available', $unitAvail, false );
 			$response	=	array(
 							'response'=>1,
 							'message'=>'Updated Successfully !'
@@ -211,7 +217,7 @@
 		if($_REQUEST){
 			$id				=	sanitize_text_field($_REQUEST['id']);
 			$is_featured	=	sanitize_text_field($_REQUEST['is_featured']);
-			if(update_post_meta( $id, 'cf_apartment_featured', $is_featured, false )){
+			if(update_post_meta( $id, 'rm_apartment_featured', $is_featured, false )){
 				$response	=	array(
 							'response'=>1,
 							'message'=>'Updated Successfully !'

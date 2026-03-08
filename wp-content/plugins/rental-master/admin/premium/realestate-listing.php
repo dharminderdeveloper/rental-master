@@ -122,7 +122,7 @@ add_shortcode('ar_realestate_listing','abr_realestate_listing');
 			}
 			$out.='</ul>';
 		}
-		$out.=abr_cf_num_pagination($totalPages);
+		$out.=abr_rm_num_pagination($totalPages);
 		$out.='</div>';
 	}
 	else{
@@ -139,15 +139,15 @@ add_shortcode('ar_realestate_listing','abr_realestate_listing');
 	//	echo '<pre>';print_r( $realestate );exit; 
 	$rlink			=	get_permalink($rid);
 	@$title			=	$realestate->post_title;	
-	$rPic			=	get_post_meta($rid,'cf_realestate_photo',true);
+	$rPic			=	get_post_meta($rid,'rm_realestate_photo',true);
 	
 	$bedRoomARR		=	wp_get_post_terms($rid,'listing_bedrooms');
 	$bathRoomARR	=	wp_get_post_terms($rid,'listing_bathrooms');
 	//	$aAvailableOpARR	=	wp_get_post_terms($aid,'apartment_availability_options');
 	//	$aAreaARR			=	wp_get_post_terms($aid,'apartment_area');	
 
-	$price		=	get_post_meta($rid,'cf_realestate_listing_price',true);		
-	$location	=	get_post_meta($rid,'cf_realestate_location',true);
+	$price		=	get_post_meta($rid,'rm_realestate_listing_price',true);		
+	$location	=	get_post_meta($rid,'rm_realestate_location',true);
 	
 	$o.='<li>';
 		$o.='<a class="aptttl" href="'.$rlink.'"><img class="alignleft size-medium wp-image-43" src="'.$rPic.'" alt="apartment" width="300" height="193" /></a>';
@@ -161,7 +161,7 @@ add_shortcode('ar_realestate_listing','abr_realestate_listing');
 			foreach($bathRoomARR as $bathroom){
 				$o.=__($bathroom->name,'ar').' - ';
 			}
-			$o.=__(get_post_meta($rid,'cf_realestate_lot_size',true),'ar');			
+			$o.=__(get_post_meta($rid,'rm_realestate_lot_size',true),'ar');			
 			$o.=' Sq. Ft.';
 
 			/*

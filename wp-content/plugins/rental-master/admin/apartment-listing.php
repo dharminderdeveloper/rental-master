@@ -122,7 +122,7 @@ add_shortcode('ar_apartment_listing','abr_apartment_listing');
 			}
 			$out.='</ul>';
 		}
-		$out.=abr_cf_num_pagination($totalPages);
+		$out.=abr_rm_num_pagination($totalPages);
 		$out.='</div>';
 	}
 	else{
@@ -135,23 +135,39 @@ add_shortcode('ar_apartment_listing','abr_apartment_listing');
  function abr_apartment_post($aid){
 	$o				=	'';
 	$apartment		=	get_post($aid);
+	if ( ! $apartment || is_wp_error( $apartment ) ) {
+		return $o;
+	}
 	$alink			=	get_permalink($aid);
-	@$title			=	$apartment->post_title;	
+	if ( is_wp_error( $alink ) || empty( $alink ) ) {
+		$alink = '#';
+	}
+	$title			=	isset( $apartment->post_title ) ? $apartment->post_title : '';
 	$bedRoomARR		=	wp_get_post_terms($aid,'apartment_bedrooms');
 	$bathRoomARR		=	wp_get_post_terms($aid,'apartment_bathrooms');
 	$aAvailableOpARR	=	wp_get_post_terms($aid,'apartment_availability_options');
 	$aAreaARR			=	wp_get_post_terms($aid,'apartment_area');
-	$aPic				=	get_post_meta($aid,'cf_apartment_pic',true);
-	$monthlyRent		=	get_post_meta($aid,'cf_apartment_rent_month',true);	
-	$cmid				=	get_post_meta($aid,'cf_apartment_community',true);
+	if ( is_wp_error( $bedRoomARR ) ) { $bedRoomARR = array(); }
+	if ( is_wp_error( $bathRoomARR ) ) { $bathRoomARR = array(); }
+	if ( is_wp_error( $aAvailableOpARR ) ) { $aAvailableOpARR = array(); }
+	if ( is_wp_error( $aAreaARR ) ) { $aAreaARR = array(); }
+	$aPic				=	get_post_meta($aid,'rm_apartment_pic',true);
+	if ( is_wp_error( $aPic ) ) { $aPic = ''; }
+	$monthlyRent		=	get_post_meta($aid,'rm_apartment_rent_month',true);	
+	$cmid				=	get_post_meta($aid,'rm_apartment_community',true);
 	$cDetail 			=	get_post($cmid);
+	$community_title	= '';
+	if ( $cDetail && ! is_wp_error( $cDetail ) && isset( $cDetail->post_title ) ) {
+		$community_title = $cDetail->post_title;
+	}
 	?>
 		<script>
-			jQuery( '.entry-title' ).text( '<?php echo $cDetail->post_title; ?>' );
+			jQuery( '.entry-title' ).text( '<?php echo esc_js( $community_title ); ?>' );
 		</script>
 	<?php
 	//entry-title
-	$location			=	get_post_meta($cmid,'cf_community_address',true);
+	$location			=	get_post_meta($cmid,'rm_community_address',true);
+	if ( is_wp_error( $location ) ) { $location = ''; }
 	$o.='<li>';
 		$o.='<a class="aptttl" href="'.$alink.'"><img class="alignleft size-medium wp-image-43" src="'.$aPic.'" alt="apartment" width="300" height="193" /></a>';
 		$o.='<div>';
@@ -182,16 +198,21 @@ add_shortcode('ar_apartment_listing','abr_apartment_listing');
 	ob_start();
 	$newarr	=	array();
 	foreach($myposts as $apid){
-		$apic    		=	get_post_meta($apid,'cf_apartment_pic',true);
+		$apic    		=	get_post_meta($apid,'rm_apartment_pic',true);
 		$mlatlng 		=	get_post_meta($apid,"martygeocoderlatlng",true);
-		$agallery  	=	get_post_meta($apid,'cf_apartment_gallery',true);
+		$agallery  	=	get_post_meta($apid,'rm_apartment_gallery',true);
 		$mAd	 		=	get_post_meta($apid,"martygeocoderaddress",true);
-		$arent   		=	get_post_meta($apid,'cf_apartment_rent_month',true);
+		$arent   		=	get_post_meta($apid,'rm_apartment_rent_month',true);
 		$bedRoomARR	=	wp_get_post_terms($apid,'apartment_bedrooms');
 		$bathRoomARR 	=	wp_get_post_terms($apid,'apartment_bathrooms');
 		$aptStyleTAX 	=	wp_get_post_terms($apid,'apartment_style');
 		$apartment_area =	wp_get_post_terms($apid,'apartment_area');
+		if ( is_wp_error( $bedRoomARR ) ) { $bedRoomARR = array(); }
+		if ( is_wp_error( $bathRoomARR ) ) { $bathRoomARR = array(); }
+		if ( is_wp_error( $aptStyleTAX ) ) { $aptStyleTAX = array(); }
+		if ( is_wp_error( $apartment_area ) ) { $apartment_area = array(); }
 		$post_perma   =   get_post_permalink($apid);
+		if ( is_wp_error( $post_perma ) || empty( $post_perma ) ) { $post_perma = '#'; }
 		foreach($bedRoomARR as $bedroom){ $bedroomname = $bedroom->name; }
 		foreach($bathRoomARR as $bathroom){ $bathroomname = $bathroom->name;}
 		foreach($apartment_area as $aArea){ $aAreaname = $aArea->name;}
@@ -202,13 +223,13 @@ add_shortcode('ar_apartment_listing','abr_apartment_listing');
 		}
 	} ?>
 	<script type="text/javascript">
-	var homeimg='<?php echo ABR_PLUGIN_DIR_URL.'img/home2-16.png'; ?>',
-	bedroom='<?php echo ABR_PLUGIN_DIR_URL.'img/bed39-16.png'; ?>',
-	bathroom='<?php echo ABR_PLUGIN_DIR_URL.'img/sex-male-16.png'; ?>',
-	sqfeet='<?php echo ABR_PLUGIN_DIR_URL.'img/sqfeet.png';  ?>';
+	var homeimg='<?php echo RM_PLUGIN_DIR_URL.'img/home2-16.png'; ?>',
+	bedroom='<?php echo RM_PLUGIN_DIR_URL.'img/bed39-16.png'; ?>',
+	bathroom='<?php echo RM_PLUGIN_DIR_URL.'img/sex-male-16.png'; ?>',
+	sqfeet='<?php echo RM_PLUGIN_DIR_URL.'img/sqfeet.png';  ?>';
 	function initialize(){
-		var markerImage='<?php echo ABR_PLUGIN_DIR_URL.'img/mapmarker.png'; ?>';
-		var clusterMarkerImage='<?php echo ABR_PLUGIN_DIR_URL.'img/mapmaker.png'; ?>';
+		var markerImage='<?php echo RM_PLUGIN_DIR_URL.'img/mapmarker.png'; ?>';
+		var clusterMarkerImage='<?php echo RM_PLUGIN_DIR_URL.'img/mapmaker.png'; ?>';
 		var jsondata=JSON.parse('<?php  echo json_encode($newarr); ?>');
 		var map=new google.maps.Map(document.getElementById('map'),{
 			zoom:10,center:new google.maps.LatLng(39.170496,-86.5978595),

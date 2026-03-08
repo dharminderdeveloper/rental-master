@@ -1,0 +1,80 @@
+.rental-plugin-wrapper {
+	--rm-border: #e2e8f0;
+	--rm-text-soft: #64748b;
+}
+
+.rental-plugin-wrapper .rm-search-form {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 12px;
+	align-items: end;
+}
+
+.rental-plugin-wrapper .rm-fast-search-list {
+	margin: 10px 0 0;
+	padding: 0;
+	list-style: none;
+	border: 1px solid var(--rm-border);
+	border-radius: 12px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.rental-plugin-wrapper .rm-fast-search-list li {
+	padding: 10px 12px;
+	border-bottom: 1px solid #f1f5f9;
+}
+
+.rental-plugin-wrapper .rm-fast-search-list li:last-child {
+	border-bottom: 0;
+}
+
+.rental-plugin-wrapper .rm-pagination ul {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	list-style: none;
+}
+
+.rental-plugin-wrapper .rm-pagination a,
+.rental-plugin-wrapper .rm-pagination span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 36px;
+	height: 36px;
+	padding: 0 10px;
+	border: 1px solid var(--rm-border);
+	border-radius: 10px;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.rental-plugin-wrapper .rm-pagination .current {
+	background: #0f172a;
+	color: #fff;
+	border-color: #0f172a;
+}
+
+.rental-plugin-wrapper .rm-map-canvas {
+	width: 100%;
+	min-height: 320px;
+}
+
+.rental-plugin-wrapper .rm-map-infowindow {
+	font-size: 13px;
+	padding: 2px 4px;
+}
+
+.rental-plugin-wrapper .rm-map-panel-card p {
+	margin: 0;
+	color: var(--rm-text-soft);
+}
+
+@media (max-width: 640px) {
+	.rental-plugin-wrapper .rm-search-form {
+		grid-template-columns: 1fr;
+	}
+}

@@ -1,12 +1,12 @@
 <?php
 
 /** 
-*	Function:	abr_cf_num_pagination
+*	Function:	abr_rm_num_pagination
 *
 *	@param:		$max_num_pages
 *	@return:	$content
 */
-	function abr_cf_num_pagination($max_num_pages = 0){
+	function abr_rm_num_pagination($max_num_pages = 0){
 		ob_start();
 		if( $max_num_pages <= 1 )
 			return;

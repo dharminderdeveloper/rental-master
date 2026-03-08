@@ -4,19 +4,19 @@
 	*
 	*/
 	function abr_register_premium_style(){
-		wp_register_style('abr-premium-css',ABR_PLUGIN_DIR_URL.'/admin/premium/css/abr-premium.css',false,'0.0.1');
+		wp_register_style('abr-premium-css',RM_PLUGIN_DIR_URL.'/admin/premium/css/abr-premium.css',false,'0.0.1');
 		wp_enqueue_style('abr-premium-css');
 	}
 	add_action( 'admin_enqueue_scripts','abr_register_premium_style');
 	
 	/*
-	* Register Script for About Rentals
+	* Register Script for Rental Master
 	*/
 	function abr_register_premium_js() {
-		wp_register_script('abr-premium-js',ABR_PLUGIN_DIR_URL.'/admin/premium/js/abr-premium.js',array('jquery'),'1.0',false);
+		wp_register_script('abr-premium-js',RM_PLUGIN_DIR_URL.'/admin/premium/js/abr-premium.js',array('jquery'),'1.0',false);
 		wp_enqueue_script('abr-premium-js');
 		
-		wp_register_script('sweet-alert',ABR_PLUGIN_DIR_URL.'/admin/premium/js/sa.min.js',array('jquery'),'1.0',false);
+		wp_register_script('sweet-alert',RM_PLUGIN_DIR_URL.'/admin/premium/js/sa.min.js',array('jquery'),'1.0',false);
 		wp_enqueue_script('sweet-alert');
 	}
 	add_action( 'admin_enqueue_scripts','abr_register_premium_js');
@@ -26,8 +26,8 @@
 	/*--------------------------------------*/
 
 	include('limit-post.php');
-	include('about-rental-help.php');
-	include('about-rental-ajax.php');
+	include('rental-master-help.php');
+	include('rental-master-ajax.php');
 	include('pre-prepared-data.php');
 	include('availability-manager.php');
 	
@@ -52,7 +52,7 @@
 	include('search-settings.php');
 
 	/**---------	Widget	----------**/
-	include(ABR_PLUGIN_DIR_PATH.'widget/realestate-widgets.php');
+	include(RM_PLUGIN_DIR_PATH.'widget/realestate-widgets.php');
 	
 
 	/**
@@ -66,7 +66,7 @@
 
 		if((!empty($key))&&(!empty($domain))){
 
-			$url =ABR_PLUGIN_MASTER_URL.'wp-admin/admin-ajax.php?action=activation_ajax&key='.$key.'&domain='.$domain;
+			$url =RM_PLUGIN_MASTER_URL.'wp-admin/admin-ajax.php?action=activation_ajax&key='.$key.'&domain='.$domain;
 			$request	=	wp_remote_get($url);
 			$response	=	wp_remote_retrieve_body( $request );
 			$obj		=	json_decode( $response,true);
@@ -103,7 +103,7 @@
 			//Formatted address
 			$formattedAddr = str_replace(' ','+',$address);
 			//Send request and receive json data by address
-			$geocodeFromAddr = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$formattedAddr.'&sensor=true_or_false&key='.ABR_MAP_API_KEY); 
+			$geocodeFromAddr = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$formattedAddr.'&sensor=true_or_false&key='.RM_MAP_API_KEY); 
 
 			$output = json_decode($geocodeFromAddr);
 			//	echo '<pre>';print_r( $output );exit; 

@@ -14,10 +14,10 @@ class Cf_Abr_Apartment{
 			add_action('init',array($this,'abr_apartment_init'));
 		}
 		add_action('init',array($this,'abr_create_apartment_taxonomies'),0);
-		add_action('cmb2_admin_init',array($this,'cf_apartment_register_metabox'));
+		add_action('cmb2_admin_init',array($this,'rm_apartment_register_metabox'));
 		add_action('admin_menu',array($this,'abr_remove_apartment_meta_box'));
-		add_action('cmb2_admin_init',array($this,'cf_apartment_availability_options_term_metabox'));
-		add_action('cmb2_admin_init',array($this,'cf_apartment_amenities_term_metabox'));
+		add_action('cmb2_admin_init',array($this,'rm_apartment_availability_options_term_metabox'));
+		add_action('cmb2_admin_init',array($this,'rm_apartment_amenities_term_metabox'));
 		add_action('manage_posts_columns',array($this,'abr_manage_columns' ),10,2 );
 		add_filter('manage_apartment_posts_columns',array($this,'craigslist_columns_head'));
 		add_action('manage_apartment_posts_custom_column', array($this,'craigslist_columns_content'), 10, 2);
@@ -110,7 +110,7 @@ class Cf_Abr_Apartment{
 			'public'                => true,
 			'show_ui'               => true,
 			'show_in_menu'          => true,
-			'menu_icon'             => ABR_PLUGIN_DIR_URL.'img/apartment.png',
+			'menu_icon'             => 'dashicons-building',
 			'show_in_admin_bar'     => true,
 			'show_in_nav_menus'     => true,
 			'can_export'            => true,
@@ -122,30 +122,30 @@ class Cf_Abr_Apartment{
 		register_post_type('apartment',$args);
 	}
 	
-	function cf_apartment_availability_options_term_metabox(){
-		$cf_term_c_owner = new_cmb2_box( array(
-			'id'               => 'cf_term_a_options',
+	function rm_apartment_availability_options_term_metabox(){
+		$rm_term_c_owner = new_cmb2_box( array(
+			'id'               => 'rm_term_a_options',
 			'title'            => __('Priority','cmb2'),
 			'object_types'     => array('term'),
 			'taxonomies'       => array('apartment_availability_options'),
 		));
-		$cf_term_c_owner->add_field(array(
+		$rm_term_c_owner->add_field(array(
 			'name'       => __('Priority','ar'),
-			'id'         => 'cf_ao_priority',
+			'id'         => 'rm_ao_priority',
 			'type'       => 'text'
 		));
 	}
 	
-	function cf_apartment_amenities_term_metabox(){
-		$cf_term_c_owner = new_cmb2_box( array(
-			'id'               => 'cf_term_a_amenities',
+	function rm_apartment_amenities_term_metabox(){
+		$rm_term_c_owner = new_cmb2_box( array(
+			'id'               => 'rm_term_a_amenities',
 			'title'            => __('Amenity Group','cmb2'),
 			'object_types'     => array('term'),
 			'taxonomies'       => array('apartment_amenities'),
 		));
-		$cf_term_c_owner->add_field(array(
+		$rm_term_c_owner->add_field(array(
 			'name'      => __('Amenity Group','ar'),
-			'id'        => 'cf_oc_address',
+			'id'        => 'rm_oc_address',
 			'type'		=>'taxonomy_select',
 			'taxonomy'	=>'apartment_amenity_group',
 			'show_option_none' =>true
@@ -460,101 +460,101 @@ class Cf_Abr_Apartment{
 		
 	}
 	
-	function cf_apartment_register_metabox(){
-		$cf_apartment = new_cmb2_box(array(
-			'id'=>'cf_apartment_metabox',
+	function rm_apartment_register_metabox(){
+		$rm_apartment = new_cmb2_box(array(
+			'id'=>'rm_apartment_metabox',
 			'title'=>__('New Apartment','ar'),
 			'object_types'=>array('apartment')
 		));
 		
 		
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'=>__('Community','ar'),
 			'desc'=>__('Select one of community from drop-down ','ar'),
-			'id'=>'cf_apartment_community',
+			'id'=>'rm_apartment_community',
 			'type'=>'select',
 			'show_option_none' =>false,
-			'options'          =>CF_AR_Community::get_communitys_id_title_ARR()
+			'options'          =>RM_Community::get_communitys_id_title_ARR()
 		));	
 		
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'     =>__('Apartment Location','ar'),
-			'id'       =>'cf_apartment_location',
+			'id'       =>'rm_apartment_location',
 			'type'     =>'taxonomy_select',
 			'taxonomy' =>'community_location',
 			'show_option_none' =>false
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'     =>__('Apartment Style','ar'),
 			'desc'     =>__('Select one of apartment style from drop-down ','ar'),
-			'id'       =>'cf_apartment_style',
+			'id'       =>'rm_apartment_style',
 			'type'     =>'taxonomy_select',
 			'taxonomy' =>'apartment_style',
 			'show_option_none' =>false
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'     =>__('Bedrooms','ar'),
-			'id'       =>'cf_apartment_bedrooms',
+			'id'       =>'rm_apartment_bedrooms',
 			'type'     =>'taxonomy_select',//taxonomy_multicheck_inline
 			'taxonomy' =>'apartment_bedrooms',
 			'show_option_none' =>false
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'     =>__('Bathrooms','ar'),
-			'id'       =>'cf_apartment_bathrooms',
+			'id'       =>'rm_apartment_bathrooms',
 			'type'     =>'taxonomy_select',
 			'taxonomy' =>'apartment_bathrooms',
 			'show_option_none' =>false
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'     =>__('Area (Square Footage)','ar'),
-			'id'       =>'cf_apartment_area',
+			'id'       =>'rm_apartment_area',
 			'type'     =>'taxonomy_select',
 			'taxonomy' =>'apartment_area',
 			'show_option_none' =>false
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' =>__('Rental Occupancy','ar'),
-			'id'   =>'cf_apartment_rental_occupancy',
+			'id'   =>'rm_apartment_rental_occupancy',
 			'type'     =>'taxonomy_select',
 			'taxonomy' =>'apartment_rental_occupancy',
 			'show_option_none' =>false
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'		=>__('Utilities Paid by Landlord','ar'),
-			'id'=>		'cf_apartment_utilities_landlord',
+			'id'=>		'rm_apartment_utilities_landlord',
 			'type'		=> 'multicheck',
-			'options'	=> About_rental_cf_exe::get_terms_id_title_ARR('apartment_utilities')
+			'options'	=> About_rental_rm_exe::get_terms_id_title_ARR('apartment_utilities')
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'		=>__('Utilities Paid by Tenant','ar'),
-			'id'		=>'cf_apartment_utilities_tenant',
+			'id'		=>'rm_apartment_utilities_tenant',
 			'type'		=> 'multicheck',
-			'options'	=> About_rental_cf_exe::get_terms_id_title_ARR('apartment_utilities')
+			'options'	=> About_rental_rm_exe::get_terms_id_title_ARR('apartment_utilities')
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'     =>__('Apartment Amenities','ar'),
-			'id'       =>'cf_apartment_amenities',
+			'id'       =>'rm_apartment_amenities',
 			'type'     =>'taxonomy_multicheck',
 			'taxonomy' =>'apartment_amenities',
 			'show_option_none' =>false
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' =>__('Availability Options','ar'),
-			'id'   =>'cf_apartment_availability',
+			'id'   =>'rm_apartment_availability',
 			'type'     =>'taxonomy_multicheck_inline',
 			'taxonomy' =>'apartment_availability_options',
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name'     =>__('Leasing Options ','ar'),
-			'id'       =>'cf_apartment_leasing_options',
+			'id'       =>'rm_apartment_leasing_options',
 			'type'     =>'taxonomy_multicheck',
 			'taxonomy' =>'apartment_leasing'
 		));
 		
-		$cf_apartment->add_field( array(
+		$rm_apartment->add_field( array(
 			'name' => __('Rent/month','ar'),
-			'id'   =>'cf_apartment_rent_month',
+			'id'   =>'rm_apartment_rent_month',
 			'type' => 'text',
 			'attributes' => array(
 				'type' => 'number',
@@ -563,104 +563,104 @@ class Cf_Abr_Apartment{
 			'sanitization_cb' => 'absint',
 			'escape_cb'       => 'absint',
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' =>__('Monthly Rent Range','ar'),
-			'id'   =>'cf_apartment_rent_month_range',
+			'id'   =>'rm_apartment_rent_month_range',
 			'type'     =>'taxonomy_select',
 			'taxonomy' =>'apartment_monthly_rent',
 			'show_option_none' =>false
 		));
 		
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' =>__('Date Available','ar'),
-			'id'   =>'cf_apartment_date_available',
+			'id'   =>'rm_apartment_date_available',
 			'type' =>'text_date',
 			'date_format' =>'d-m-Y'
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('Apartment Features','ar'),
-			'id'   => 'cf_apartment_features',
+			'id'   => 'rm_apartment_features',
 			'type' => 'wysiwyg',
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('No of units','ar'),
-			'id'   => 'cf_apartment_no_of_units',
+			'id'   => 'rm_apartment_no_of_units',
 			'type' => 'text'
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('No of units available','ar'),
-			'id'   => 'cf_apartment_no_of_units_available',
+			'id'   => 'rm_apartment_no_of_units_available',
 			'type' => 'text'
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('Page Title','ar'),
-			'id'   => 'cf_apartment_page_title',
+			'id'   => 'rm_apartment_page_title',
 			'type' => 'text'
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('Meta Keywords','ar'),
-			'id'   => 'cf_apartment_meta_keywords',
+			'id'   => 'rm_apartment_meta_keywords',
 			'type' => 'textarea_small'
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('Meta Description','ar'),
-			'id'   => 'cf_apartment_meta_description',
+			'id'   => 'rm_apartment_meta_description',
 			'type' => 'textarea_small'
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('Meta Author','ar'),
-			'id'   => 'cf_apartment_meta_author',
+			'id'   => 'rm_apartment_meta_author',
 			'type' => 'text'
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('Meta Robots','ar'),
-			'id'   => 'cf_apartment_meta_robots',
+			'id'   => 'rm_apartment_meta_robots',
 			'type' => 'text'
 		));
-		$cf_apartment->add_field( array(
+		$rm_apartment->add_field( array(
 			'name' => __( 'Apartment Pic','ar'),
-			'id'   => 'cf_apartment_pic',
+			'id'   => 'rm_apartment_pic',
 			'type' => 'file',
 		));
-		$cf_apartment->add_field( array(
+		$rm_apartment->add_field( array(
 			'name' => __( 'Apartment Gallery','ar'),
-			'id'   => 'cf_apartment_gallery',
+			'id'   => 'rm_apartment_gallery',
 			'type' => 'file_list',
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('Apartment Pic Alt Text','ar'),
-			'id'   => 'cf_apartment_pic_alt_text',
+			'id'   => 'rm_apartment_pic_alt_text',
 			'type' => 'text'
 		));
-		$cf_apartment->add_field( array(
+		$rm_apartment->add_field( array(
 			'name' => __( 'Apartment Pic','ar'),
-			'id'   => 'cf_apartment_pic',
+			'id'   => 'rm_apartment_pic',
 			'type' => 'file',
 		));
-		$cf_apartment->add_field(array(
+		$rm_apartment->add_field(array(
 			'name' => __('Apartment Floor Plan Alt Text','ar'),
-			'id'   => 'cf_apartment_floor_plan_alt_text',
+			'id'   => 'rm_apartment_floor_plan_alt_text',
 			'type' => 'text'
 		));
-		$cf_apartment->add_field( array(
+		$rm_apartment->add_field( array(
 			'name' => __('Featured ?','ar'),
-			'id'   => 'cf_apartment_featured',
+			'id'   => 'rm_apartment_featured',
 			'type' => 'checkbox',
 		));
-		$cf_apartment->add_field( array(
+		$rm_apartment->add_field( array(
 			'name' => __('Youtube video','ar'),
 			'desc' => __('Enter a youtube URL','ar' ),
-			'id'   => 'cf_apartment_youtube_video',
+			'id'   => 'rm_apartment_youtube_video',
 			'type' => 'oembed',
 		));	
-		$cf_apartment->add_field( array(
+		$rm_apartment->add_field( array(
 			'name'         => 'Listing Priority',
-			'id'           => 'cf_apartment_listing_priority',
+			'id'           => 'rm_apartment_listing_priority',
 			'type'         => 'text'
 		));
-		$cf_apartment->add_field( array(
+		$rm_apartment->add_field( array(
 			'name'    => 'Virtual Tours',
-			'id'      => 'cf_apartment_vrids',
+			'id'      => 'rm_apartment_vrids',
 			'desc'    => 'Select ingredients. Drag to reorder.',
 			'type'    => 'pw_multiselect',
 			'options' => Cf_Abr_Apartment::get_vr_post_ARR(),
@@ -705,26 +705,36 @@ class Cf_Abr_Apartment{
 	   }
 	   if($column_name == 'Featured') {
 		   ?>
-			<input class="checkbox" type="checkbox" <?php checked(get_post_meta($post_ID,'cf_apartment_featured',true ), 'on' ) ?> id="featurediS" value="<?php echo get_post_meta($post_ID,'cf_apartment_featured',true );?>" pid="<?php echo $post_ID; ?>"/>
+			<input class="checkbox" type="checkbox" <?php checked(get_post_meta($post_ID,'rm_apartment_featured',true ), 'on' ) ?> id="featurediS" value="<?php echo get_post_meta($post_ID,'rm_apartment_featured',true );?>" pid="<?php echo $post_ID; ?>"/>
 			<?php
 	   }
 	}
 
 	function craigslist_content($pid){
-		$aptPic		=	get_post_meta($pid,'cf_apartment_pic',true);
-		$cmgallery   	=	get_post_meta($pid,'cf_apartment_gallery',true);
-		$location		=	get_post_meta($pid,'cf_apartment_location',true);
-		$aptFeatures	=	get_post_meta($pid,'cf_apartment_features',true);
-		$community_id	=	get_post_meta($pid,'cf_apartment_community',true);
+		$aptPic		=	get_post_meta($pid,'rm_apartment_pic',true);
+		$cmgallery   	=	get_post_meta($pid,'rm_apartment_gallery',true);
+		$location		=	get_post_meta($pid,'rm_apartment_location',true);
+		$aptFeatures	=	get_post_meta($pid,'rm_apartment_features',true);
+		$community_id	=	get_post_meta($pid,'rm_apartment_community',true);
 		$bedroom		=	wp_get_post_terms($pid,'apartment_bedrooms',true);
+		if ( is_wp_error( $aptPic ) ) { $aptPic = ''; }
+		if ( is_wp_error( $cmgallery ) ) { $cmgallery = array(); }
+		if ( ! is_array( $cmgallery ) ) { $cmgallery = array_filter( array( $cmgallery ) ); }
+		if ( is_wp_error( $location ) ) { $location = ''; }
+		if ( is_wp_error( $aptFeatures ) ) { $aptFeatures = ''; }
+		if ( is_wp_error( $community_id ) ) { $community_id = 0; }
+		if ( is_wp_error( $bedroom ) ) { $bedroom = array(); }
+		$bedroom_count = is_array( $bedroom ) ? count( $bedroom ) : 0;
+		$community_title = $community_id ? get_the_title( $community_id ) : '';
+		if ( is_wp_error( $community_title ) ) { $community_title = ''; }
 		
 		$html='';
 		$html.='<div id="modal-window-id-'.$pid.'" style="display:none;padding:5px 10px" class="crag-content">';
-		$html.='<div style="width:100%;text-align:center"><img src="'.ABR_PLUGIN_DIR_URL.'img/master-logo.png"></div>';
-		$html.='<h2 style="width:100%;text-align:center">'.get_the_title($community_id).'</h2><hr>';
+		$html.='<div style="width:100%;text-align:center"><img src="'.RM_PLUGIN_DIR_URL.'img/master-logo.png"></div>';
+		$html.='<h2 style="width:100%;text-align:center">'.$community_title.'</h2><hr>';
 			
 			$html.='<div style="width:100%; text-align:left">';
-				$html.='<p><b>Location:</b> '.$location.' &nbsp; <b>Bedrooms: </b>'.count($bedroom).'</p>';
+				$html.='<p><b>Location:</b> '.$location.' &nbsp; <b>Bedrooms: </b>'.$bedroom_count.'</p>';
 				$html.='<a href="'.$aptPic.'"class="square-pic"><img style="width:200px" src="'.$aptPic.'"></a>';
 				$html.='<p>'.$aptFeatures.'</p>';
 				if(!empty($cmgallery)){
@@ -738,8 +748,8 @@ class Cf_Abr_Apartment{
 				$html.='</div>';
 				$html.='<hr>';
 				$html.='<div id="content_'.$pid.'" style="min-height:200px">';				
-				$html.='<xmp><div><h2>'.get_the_title($community_id).'</h2></xmp>';
-				$html.='<xmp><p><b>Location:</b> '.$location.' &nbsp; <b>Bedrooms: </b>'.count($bedroom).'</p></xmp>';
+				$html.='<xmp><div><h2>'.$community_title.'</h2></xmp>';
+				$html.='<xmp><p><b>Location:</b> '.$location.' &nbsp; <b>Bedrooms: </b>'.$bedroom_count.'</p></xmp>';
 				$html.='<xmp><a href="'.$aptPic.'" class="square-pic"><img src="'.$aptPic.'"></a></xmp>';
 				$html.='<xmp><p>'.$aptFeatures.'</p></xmp>';
 				if(!empty($cmgallery)){

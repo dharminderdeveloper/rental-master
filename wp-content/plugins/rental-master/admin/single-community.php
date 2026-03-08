@@ -5,26 +5,26 @@ add_filter('the_content','abr_add_single_community_filter',99);
 *	Single Community Page 
 */
 function abr_add_single_community_filter($content){
-	$CF_AR_Community	= new CF_AR_Community();
+	$RM_Community	= new RM_Community();
 	global $post;
 	if($post->post_type=='community'&&!is_page()){
 		$cmid				=	$post->ID;
-		$cmPic				=	get_post_meta($cmid,'cf_community_pic',true);
-		$map				=	get_post_meta($cmid,'cf_community_map',true);
-		$cmCity			=	get_post_meta($cmid,'cf_community_city',true);
-		$cmState			=	get_post_meta($cmid,'cf_community_state',true);
-		$vrIDs				=	get_post_meta($cmid,'cf_community_vrids',true);
-		$cmgallery		=	get_post_meta($cmid,'cf_community_gallery',true);
-		$cmAdress			=	get_post_meta($cmid,'cf_community_address',true);
-		$cmZip				=	get_post_meta($cmid,'cf_community_zip_code',true);
-		$desc				=	get_post_meta($cmid,'cf_community_description',true);
-		$video				=	get_post_meta($cmid,'cf_community_youtube_video',true);
-		$apid 				=	About_rental_cf_exe::get_id_by_slug('apartment-application');
-		$alistid 			=	About_rental_cf_exe::get_id_by_slug('community-apartments');
-		$emailfavid		=	About_rental_cf_exe::get_id_by_slug('email-favorites');
-		$comshortcodetid =	About_rental_cf_exe::get_id_by_slug('community-shortcode');
+		$cmPic				=	get_post_meta($cmid,'rm_community_pic',true);
+		$map				=	get_post_meta($cmid,'rm_community_map',true);
+		$cmCity			=	get_post_meta($cmid,'rm_community_city',true);
+		$cmState			=	get_post_meta($cmid,'rm_community_state',true);
+		$vrIDs				=	get_post_meta($cmid,'rm_community_vrids',true);
+		$cmgallery		=	get_post_meta($cmid,'rm_community_gallery',true);
+		$cmAdress			=	get_post_meta($cmid,'rm_community_address',true);
+		$cmZip				=	get_post_meta($cmid,'rm_community_zip_code',true);
+		$desc				=	get_post_meta($cmid,'rm_community_description',true);
+		$video				=	get_post_meta($cmid,'rm_community_youtube_video',true);
+		$apid 				=	About_rental_rm_exe::get_id_by_slug('apartment-application');
+		$alistid 			=	About_rental_rm_exe::get_id_by_slug('community-apartments');
+		$emailfavid		=	About_rental_rm_exe::get_id_by_slug('email-favorites');
+		$comshortcodetid =	About_rental_rm_exe::get_id_by_slug('community-shortcode');
 		$cmAmenitieTAX	=	wp_get_post_terms($cmid,'community_features');
-		$apartmentsARR	=	$CF_AR_Community->abr_get_apartments($cmid);
+		$apartmentsARR	=	$RM_Community->abr_get_apartments($cmid);
 		ob_start(); ?>
 		<div class="cmSecA">
 			<?php
@@ -106,10 +106,10 @@ function abr_add_single_community_filter($content){
 						
 						echo '<li><a href="'.get_permalink($emailfavid).'">'.__('Email My Favorites','ar').'</a></li>';
 						
-						echo '<li><a href="javascript:void(0)" onclick="cf_print_page()">'.__('Print this page','ar').'</a></li>';
+						echo '<li><a href="javascript:void(0)" onclick="rm_print_page()">'.__('Print this page','ar').'</a></li>';
 						
 						echo'<li class="addfav_remofav">';
-						if(CF_AR_Favorites::abr_is_in_favorites($post->ID) == false){
+						if(RM_Favorites::abr_is_in_favorites($post->ID) == false){
 							echo'<a id="'.$post->ID.'" href="javascript:void(0)" class="cmFVT" status="1" >'.__('Add To Favorites','ar').'</a>';
 						}
 						else{
@@ -152,7 +152,7 @@ function abr_add_single_community_filter($content){
 					if(!empty($apartmentsARR)){
 						for($i=0;$i<count($apartmentsARR);$i++){
 							$apartmentID 	=	$apartmentsARR[$i];
-							$src	=	get_post_meta($apartmentID,'cf_apartment_pic',true);
+							$src	=	get_post_meta($apartmentID,'rm_apartment_pic',true);
 							echo '<li>';
 							echo '<span class="cmAptsA">';
 							echo '<a href="'.get_permalink($apartmentID).'">';

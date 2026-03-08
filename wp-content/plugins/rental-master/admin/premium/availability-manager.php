@@ -12,7 +12,7 @@
 	*/
 	add_action( 'admin_menu', 'abr_availability_manager_menu' );
 	function abr_availability_manager_menu(){
-		add_menu_page(__('Availability Manager','ar'),__('Availability Manager','ar'),'administrator','availability-manager','abr_availability_manager_page',ABR_PLUGIN_DIR_URL.'/img/am.png',0);
+		add_menu_page(__('Availability Manager','ar'),__('Availability Manager','ar'),'administrator','availability-manager','abr_availability_manager_page','dashicons-calendar-alt',0);
 	}
 	
 	/**
@@ -84,11 +84,11 @@
 	function abr_list_apartment_by_id($id){
 		$title			=	get_the_title($id);
 		$selected_range=	wp_get_post_terms($id,'apartment_monthly_rent');
-		$featured		=	get_post_meta($id,'cf_apartment_featured',true);
-		$rent			=	get_post_meta($id,'cf_apartment_rent_month',true);
-		$units			=	get_post_meta($id,'cf_apartment_no_of_units',true);
-		$date			=	get_post_meta($id,'cf_apartment_date_available',true);
-		$units_avail	=	get_post_meta($id,'cf_apartment_no_of_units_available',true);
+		$featured		=	get_post_meta($id,'rm_apartment_featured',true);
+		$rent			=	get_post_meta($id,'rm_apartment_rent_month',true);
+		$units			=	get_post_meta($id,'rm_apartment_no_of_units',true);
+		$date			=	get_post_meta($id,'rm_apartment_date_available',true);
+		$units_avail	=	get_post_meta($id,'rm_apartment_no_of_units_available',true);
 		?>
 		<li pid="<?php echo $id?>">
 			<span><a href="<?php echo get_permalink($id); ?>" > <?php echo __($title,'ar'); ?> </a></span>

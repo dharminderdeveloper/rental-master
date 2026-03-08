@@ -1,7 +1,7 @@
 <?php
 
 if(!defined('ABSPATH')) exit;
-class CF_AR_Community{
+class RM_Community{
 	public static function init(){
         $class = __CLASS__;
         new $class;
@@ -13,9 +13,9 @@ class CF_AR_Community{
 		}
 		add_action('init',array($this,'create_community_taxonomies'),0);		
 		add_action('admin_menu',array($this,'remove_community_meta_box'));
-		add_action('cmb2_admin_init',array($this,'cf_community_register_metabox'));
-		add_action('cmb2_admin_init',array($this,'cf_community_owner_term_metabox'));
-		add_action('cmb2_admin_init',array($this,'cf_community_category_term_metabox'));
+		add_action('cmb2_admin_init',array($this,'rm_community_register_metabox'));
+		add_action('cmb2_admin_init',array($this,'rm_community_owner_term_metabox'));
+		add_action('cmb2_admin_init',array($this,'rm_community_category_term_metabox'));
 		# -------------------------------------------------/
 		# Remove description filed from taxonomies's term /
 		# -----------------------------------------------/
@@ -113,7 +113,7 @@ class CF_AR_Community{
 			'public'                => true,
 			'show_ui'               => true,
 			'show_in_menu'          => true,		
-			'menu_icon'             => ABR_PLUGIN_DIR_URL.'img/community.png',
+			'menu_icon'             => 'dashicons-admin-multisite',
 			'show_in_admin_bar'     => true,
 			'show_in_nav_menus'     => true,
 			'can_export'            => true,
@@ -247,169 +247,169 @@ class CF_AR_Community{
 		register_taxonomy('community_owner',array('community'),$args);
 	}
 	
-	function cf_community_category_term_metabox(){
-		$cf_term_c_owner = new_cmb2_box( array(
-		'id'               => 'cf_category_t_mb',
+	function rm_community_category_term_metabox(){
+		$rm_term_c_owner = new_cmb2_box( array(
+		'id'               => 'rm_category_t_mb',
 		'title'            => __('Priority','cmb2'),
 		'object_types'     => array('term'),
 		'taxonomies'       => array('community_categories'),
 		));	
-		$cf_term_c_owner->add_field(array(
+		$rm_term_c_owner->add_field(array(
 			'name'       => __('Priority','ar'),
-			'id'         => 'cf_cc_priority',
+			'id'         => 'rm_cc_priority',
 			'type'       => 'text'
 		));
 	}
 	
-	function cf_community_owner_term_metabox(){
-		$cf_term_c_owner = new_cmb2_box( array(
-		'id'               => 'cf_term_c_owner',
+	function rm_community_owner_term_metabox(){
+		$rm_term_c_owner = new_cmb2_box( array(
+		'id'               => 'rm_term_c_owner',
 		'title'            => __('Owner','cmb2'),
 		'object_types'     => array('term'),
 		'taxonomies'       => array('community_owner'),
 		));
-		$cf_term_c_owner->add_field(array(
+		$rm_term_c_owner->add_field(array(
 			'name'       => __('Company City','ar'),
-			'id'         => 'cf_oc_city',
+			'id'         => 'rm_oc_city',
 			'type'       => 'text'
 		));
-		$cf_term_c_owner->add_field(array(
+		$rm_term_c_owner->add_field(array(
 			'name'       => __('Company State','ar'),
-			'id'         => 'cf_oc_state',
+			'id'         => 'rm_oc_state',
 			'type'       => 'text'
 		));
-		$cf_term_c_owner->add_field(array(
+		$rm_term_c_owner->add_field(array(
 			'name'       => __('Company Zip','ar'),
-			'id'         => 'cf_oc_zip',
+			'id'         => 'rm_oc_zip',
 			'type'       => 'text'
 		));
-		$cf_term_c_owner->add_field(array(
+		$rm_term_c_owner->add_field(array(
 			'name'       => __('Company Address','ar'),
-			'id'         => 'cf_oc_address',
+			'id'         => 'rm_oc_address',
 			'type' => 'textarea_small'
 		));
-		$cf_term_c_owner->add_field(array(
+		$rm_term_c_owner->add_field(array(
 			'name'       => __('Company Contact Person','ar'),
-			'id'         => 'cf_oc_contact_person',
+			'id'         => 'rm_oc_contact_person',
 			'type'       => 'text'
 		));
-		$cf_term_c_owner->add_field(array(
+		$rm_term_c_owner->add_field(array(
 			'name'       => __('Company Contact Email','ar'),
-			'id'         => 'cf_oc_cp_email',
+			'id'         => 'rm_oc_cp_email',
 			'type'       => 'text_email'
 		));
 	}
 	
-	function cf_community_register_metabox(){
-		$cf_community = new_cmb2_box(array('id'=>'cf_community_metabox','title'=>__('New Community','ar'),'object_types'=>array('community')));
-		$cf_community->add_field(array(
+	function rm_community_register_metabox(){
+		$rm_community = new_cmb2_box(array('id'=>'rm_community_metabox','title'=>__('New Community','ar'),'object_types'=>array('community')));
+		$rm_community->add_field(array(
 			'name'=>__('Community Owner','ar'),
-			'id'=>'cf_community_owner',
+			'id'=>'rm_community_owner',
 			'type'=>'taxonomy_select',
 			'taxonomy'=>'community_owner',
 			'show_option_none'=>false
 		));
-		$cf_community->add_field(array(
+		$rm_community->add_field(array(
 			'name'=>__('Community Category','ar'),
-			'id'=>'cf_community_cat',
+			'id'=>'rm_community_cat',
 			'type'=>'taxonomy_select',
 			'taxonomy'=>'community_categories',
 			'show_option_none'=>false
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'     => __( 'Community Type','ar'),
 			'desc'     => __( 'Select one of community type from drop-down ','ar'),
-			'id'       => 'cf_community_type',
+			'id'       => 'rm_community_type',
 			'type'     => 'taxonomy_select',
 			'taxonomy' => 'community_type',
 			'show_option_none' => false
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'     => __('Community Features','ar' ),
 			'desc'     => __('Select number of features','ar'),
-			'id'       => 'cf_community_features',
+			'id'       => 'rm_community_features',
 			'type'     => 'taxonomy_multicheck',
 			'taxonomy' => 'community_features'
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'     => __('Location','ar' ),
-			'id'       => 'cf_community_location',
+			'id'       => 'rm_community_location',
 			'type'     => 'taxonomy_select',
 			'taxonomy' => 'community_location',
 			'show_option_none' => false
 		));
-		$cf_community->add_field(array(
+		$rm_community->add_field(array(
 			'name' => __('Community Address','ar'),
-			'id'   => 'cf_community_address',
+			'id'   => 'rm_community_address',
 			'type' => 'textarea_small',
 		));
-		$cf_community->add_field(array(
+		$rm_community->add_field(array(
 			'name' => __('Community Map','ar'),
-			'id'   => 'cf_community_map',
+			'id'   => 'rm_community_map',
 			'desc'     => __( '<a href="javascript:void(0)" id="help_map" title="Click here to get help">Help ?</a> ','ar'),
 			'type' => 'textarea_code'
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'	=> 'Community City',
-			'id' 	=> 'cf_community_city',
+			'id' 	=> 'rm_community_city',
 			'type'	=> 'text'
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'	=> 'Community State',
-			'id'	=> 'cf_community_state',
+			'id'	=> 'rm_community_state',
 			'type'	=> 'text'
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'	=> 'Community ZIP Code',
-			'id'	=> 'cf_community_zip_code',
+			'id'	=> 'rm_community_zip_code',
 			'type'	=> 'text'
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name' => __( 'Community Pic','ar'),
-			'id'   => 'cf_community_pic',
+			'id'   => 'rm_community_pic',
 			'type' => 'file',
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name' => __( 'Community Gallery','ar'),
-			'id'   => 'cf_community_gallery',
+			'id'   => 'rm_community_gallery',
 			'type' => 'file_list',
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'         => 'Community Pic Alt Text',
-			'id'           => 'cf_community_pic_alt_text',
+			'id'           => 'rm_community_pic_alt_text',
 			'type'         => 'text'
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name' => __('Community Site Plan','ar'),
-			'id'   => 'cf_community_site_plan',
+			'id'   => 'rm_community_site_plan',
 			'type' => 'file',
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'	=> 'Community Site Plan Alt Text',
-			'id'	=> 'cf_community_site_plan_alt_text',
+			'id'	=> 'rm_community_site_plan_alt_text',
 			'type'	=> 'text'
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'	=> __('Community Description','ar'),
-			'id' 	=> 'cf_community_description',
+			'id' 	=> 'rm_community_description',
 			'type'	=> 'wysiwyg',
 			'options'	=> array('textarea_rows'=>5),
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name' => __('Youtube video','ar'),
 			'desc' => __('Enter a youtube URL','ar' ),
-			'id'   => 'cf_community_youtube_video',
+			'id'   => 'rm_community_youtube_video',
 			'type'=>'text',
 			//'type' => 'oembed',
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'	=> 'Listing Priority',
-			'id'	=> 'cf_community_listing_priority',
+			'id'	=> 'rm_community_listing_priority',
 			'type'	=> 'text'
 		));
-		$cf_community->add_field( array(
+		$rm_community->add_field( array(
 			'name'    => 'Virtual Tours',
-			'id'      => 'cf_community_vrids',
+			'id'      => 'rm_community_vrids',
 			'desc'    => 'Select ingredients. Drag to reorder.',
 			'type'    => 'pw_multiselect',
 			'options' => Cf_Abr_Apartment::get_vr_post_ARR(),
@@ -465,7 +465,7 @@ class CF_AR_Community{
 	*/
 	function no_of_appartments_content($column_name, $post_ID){
 	   if ($column_name == 'no_of_apartments') {
-	   		$count=CF_AR_Community::count_apartments($post_ID);
+	   		$count=RM_Community::count_apartments($post_ID);
 		  	if($count==0){	echo '('.$count.')'; 	}
 	  		else{
 	  			echo '<a class="cfwpTHICK" href="javascript:void(0)"  cid="'.$post_ID.'">('.$count.')</a>';
@@ -475,7 +475,7 @@ class CF_AR_Community{
 
 	function count_apartments($cid){
 		$args = array('posts_per_page'=> -1,'post_type'=>'apartment','fields'=>'ids','meta_query' => array(
-					array('key' => 'cf_apartment_community','value' => $cid,'compare' => '=')));
+					array('key' => 'rm_apartment_community','value' => $cid,'compare' => '=')));
 		$ids =  get_posts($args);
 		return count($ids);
 	}
@@ -488,7 +488,7 @@ class CF_AR_Community{
 		if($_REQUEST){
 			$cid	=	sanitize_text_field($_REQUEST['cid']);
 			$args = array('posts_per_page'=> -1,'post_type'=>'apartment','fields'=>'ids','meta_query' => array(
-					array('key' => 'cf_apartment_community','value' => $cid,'compare' => '=')));
+					array('key' => 'rm_apartment_community','value' => $cid,'compare' => '=')));
 			$ids =  get_posts($args);
 			$this->community_appartments_content($ids);
 		}
@@ -499,7 +499,7 @@ class CF_AR_Community{
 		echo '<ul class="cmApts">';
 		foreach($ids as $id){
 			if(!empty($id)){
-				$src	=	get_post_meta($id,'cf_apartment_pic',true);
+				$src	=	get_post_meta($id,'rm_apartment_pic',true);
 				echo '<li>';
 						echo '<span class="cmAptsA">';
 						echo '<a href="'.get_edit_post_link($id).'">';
@@ -522,7 +522,7 @@ class CF_AR_Community{
 			'post_type'		=>	'apartment',
 			'fields'			=>	'ids',
 			'meta_query' 		=>	array(
-					array('key'	=> 'cf_apartment_community',
+					array('key'	=> 'rm_apartment_community',
 					'value'		=> $cid,
 					'compare' 	=> '=')));
 		$ids 	=	get_posts($args);
@@ -530,4 +530,4 @@ class CF_AR_Community{
 	}
 
 }
-add_action('plugins_loaded',array('CF_AR_Community','init'));
+add_action('plugins_loaded',array('RM_Community','init'));

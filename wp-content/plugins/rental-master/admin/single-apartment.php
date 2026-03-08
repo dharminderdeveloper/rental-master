@@ -12,24 +12,24 @@ add_filter('the_content','abr_add_single_apartment_filter',99);
 	$aptAmenitieTAX =	wp_get_post_terms($apid,'apartment_amenities');
 	$aptRentOcupTAX =	wp_get_post_terms($apid,'apartment_rental_occupancy');
 	$aptAvltyOptTAX =	wp_get_post_terms($apid,'apartment_availability_options');	
-	$apgallery   	=	get_post_meta($apid,'cf_apartment_gallery',true);
-	$cmid			=	get_post_meta($apid,'cf_apartment_community',true);
-	$apt_rentMnth	=	get_post_meta($apid,'cf_apartment_rent_month',true);
-	$apUT			=	get_post_meta($apid,'cf_apartment_utilities_tenant',true);
-	$apUL			=	get_post_meta($apid,'cf_apartment_utilities_landlord',true);		
-	$map			=	get_post_meta($cmid,'cf_community_map',true);
-	$aptPic			=	get_post_meta($apid,'cf_apartment_pic',true);
-	$cmCity			=	get_post_meta($cmid,'cf_community_city',true);
-	$cmState		=	get_post_meta($cmid,'cf_community_state',true);
-	$vrIDs			=	get_post_meta($apid,'cf_apartment_vrids',true);
+	$apgallery   	=	get_post_meta($apid,'rm_apartment_gallery',true);
+	$cmid			=	get_post_meta($apid,'rm_apartment_community',true);
+	$apt_rentMnth	=	get_post_meta($apid,'rm_apartment_rent_month',true);
+	$apUT			=	get_post_meta($apid,'rm_apartment_utilities_tenant',true);
+	$apUL			=	get_post_meta($apid,'rm_apartment_utilities_landlord',true);		
+	$map			=	get_post_meta($cmid,'rm_community_map',true);
+	$aptPic			=	get_post_meta($apid,'rm_apartment_pic',true);
+	$cmCity			=	get_post_meta($cmid,'rm_community_city',true);
+	$cmState		=	get_post_meta($cmid,'rm_community_state',true);
+	$vrIDs			=	get_post_meta($apid,'rm_apartment_vrids',true);
 	$mlatlng 		=	get_post_meta($apid,"martygeocoderlatlng",true);
-	$cmAdress		=	get_post_meta($cmid,'cf_community_address',true);
+	$cmAdress		=	get_post_meta($cmid,'rm_community_address',true);
 	$mAd	 		=	get_post_meta($apid,"martygeocoderaddress",true);
-	$cmZip			=	get_post_meta($cmid,'cf_community_zip_code',true);
-	$aptFeatures	=	get_post_meta($apid,'cf_apartment_features',true);
-	$video			=	get_post_meta($apid,'cf_apartment_youtube_video',true);
+	$cmZip			=	get_post_meta($cmid,'rm_community_zip_code',true);
+	$aptFeatures	=	get_post_meta($apid,'rm_apartment_features',true);
+	$video			=	get_post_meta($apid,'rm_apartment_youtube_video',true);
 	$latlang		=	Cf_Abr_Apartment::lat_long_explode($mlatlng);
-	$emailfavid 	=	About_rental_cf_exe::get_id_by_slug('email-favorites');
+	$emailfavid 	=	About_rental_rm_exe::get_id_by_slug('email-favorites');
 	if($aptStyleTAX){$apt_style=$aptStyleTAX[0]->name;}else{$apt_style = '';}
 	if($aptAreaTAX){$apt_area	=$aptAreaTAX[0]->name;}else{$apt_area =	'';}
 	if($aptBedroomTAX){$apt_bedroom=$aptBedroomTAX[0]->name;}else{$apt_bedroom= '';}
@@ -48,12 +48,12 @@ add_filter('the_content','abr_add_single_apartment_filter',99);
 		if($mlatlng){
 			?>
 			<script type= "text/javascript">
-			var homeimg = '<?php echo ABR_PLUGIN_DIR_URL.'img/home2-16.png'; ?>';
-			var bedroom = '<?php echo ABR_PLUGIN_DIR_URL.'img/bed39-16.png'; ?>';
-			var bathroom= '<?php echo ABR_PLUGIN_DIR_URL.'img/sex-male-16.png'; ?>';
-			var sqfeet  = '<?php echo ABR_PLUGIN_DIR_URL.'img/sqfeet.png'; ?>';
+			var homeimg = '<?php echo RM_PLUGIN_DIR_URL.'img/home2-16.png'; ?>';
+			var bedroom = '<?php echo RM_PLUGIN_DIR_URL.'img/bed39-16.png'; ?>';
+			var bathroom= '<?php echo RM_PLUGIN_DIR_URL.'img/sex-male-16.png'; ?>';
+			var sqfeet  = '<?php echo RM_PLUGIN_DIR_URL.'img/sqfeet.png'; ?>';
 			function asingleinitialize(){
-				var markerImage	=	'<?php echo ABR_PLUGIN_DIR_URL.'img/mapmarker.png'; ?>';
+				var markerImage	=	'<?php echo RM_PLUGIN_DIR_URL.'img/mapmarker.png'; ?>';
 				var myCenter		=	new google.maps.LatLng(<?php echo $latlang[0]; ?>,<?php echo $latlang[1]; ?>);
 				var mapProp 		=	{center:myCenter,zoom:12,mapTypeId:google.maps.MapTypeId.ROADMAP};
 				var map		=	new google.maps.Map(document.getElementById("googleMap"),mapProp);
@@ -167,9 +167,9 @@ add_filter('the_content','abr_add_single_apartment_filter',99);
 				echo '<li><a href="'.$url.'" class="arBtn">'.__('Apply Now','ar').'&nbsp;|&nbsp;</a></li>';
 				echo '<li><a href="'.get_permalink($emailfavid).'" >'.__('Email My Favorites','ar').'&nbsp;|&nbsp;</a></li>';
 				echo '<li><a href="javascript:void(0)" class="viewMap" id="'.$cmid.'">'.__(' Click to view map','ar').'&nbsp;|&nbsp;</a></li>';
-				echo '<li><a href="javascript:void(0)"  onclick="cf_print_page()">'.__('Print this page','ar').'&nbsp;|&nbsp;</a></li>';
+				echo '<li><a href="javascript:void(0)"  onclick="rm_print_page()">'.__('Print this page','ar').'&nbsp;|&nbsp;</a></li>';
 				echo '<li class="addfav_remofav">';
-				if(CF_AR_Favorites::abr_is_in_favorites($post->ID) == false){
+				if(RM_Favorites::abr_is_in_favorites($post->ID) == false){
 					echo'<a id="'.$post->ID.'" href="javascript:void(0)" class="apFVT" status="1" >'.__('Add To Favorites','ar').'</a>';
 				}
 				else{
@@ -287,7 +287,7 @@ add_filter('the_content','abr_add_single_apartment_filter',99);
 			<?php
 				if(!empty($apUL)){
 					foreach($apUL as $apULTID){
-						echo '<li>'.__(About_rental_cf_exe::get_term_name($apULTID),'ar').'</li>';
+						echo '<li>'.__(About_rental_rm_exe::get_term_name($apULTID),'ar').'</li>';
 					}
 				}
 				else{
@@ -304,7 +304,7 @@ add_filter('the_content','abr_add_single_apartment_filter',99);
 			<?php
 			if(!empty($apUT)){
 				foreach($apUT as $apUTTID){
-					echo '<li>'.__(About_rental_cf_exe::get_term_name($apUTTID),'ar').'</li>';
+					echo '<li>'.__(About_rental_rm_exe::get_term_name($apUTTID),'ar').'</li>';
 				}
 			}
 			else{

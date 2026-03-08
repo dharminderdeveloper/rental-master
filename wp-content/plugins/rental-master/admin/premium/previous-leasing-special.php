@@ -1,6 +1,6 @@
 <?php
 if(!defined('ABSPATH')) exit;
-class CF_AR_Previous_Leasing_Special{
+class RM_Previous_Leasing_Special{
 	public static function init(){
         $class = __CLASS__;
         new $class;
@@ -14,7 +14,7 @@ class CF_AR_Previous_Leasing_Special{
 			add_action( 'wp_ajax_download_leasing',array($this,'downloadLesingFile' ) );
 		}		
 
-		add_action('cmb2_admin_init',array($this,'cf_previous_leasing_special_register_metabox'));		
+		add_action('cmb2_admin_init',array($this,'rm_previous_leasing_special_register_metabox'));		
 	}
 
 	/**
@@ -54,7 +54,7 @@ class CF_AR_Previous_Leasing_Special{
 			'has_archive'        	=> true,
 			'hierarchical'       	=> true,
 			'supports'           	=> array('title'),
-			'menu_icon'			=> ABR_PLUGIN_DIR_URL.'img/leasing.png',
+			'menu_icon'			=> 'dashicons-megaphone',
 		);
 		
 		register_post_type('previous-leasing',$args);		
@@ -81,12 +81,12 @@ class CF_AR_Previous_Leasing_Special{
 		
 		if( $post_id ){
 			// Save Meta Data
-			update_post_meta($post_id,'cf_previous_leasing_publish_date', $plSpecial[ 'public_date' ] );
-			update_post_meta($post_id,'cf_previous_leasing_expire_date', $plSpecial[ 'expire_date' ] );
-			update_post_meta($post_id,'cf_previous_leasing_description', $plSpecial[ 'description' ] );
-			update_post_meta($post_id,'cf_previous_leasing_apartment', $plSpecial[ 'apartment_ids' ] );
-			update_post_meta($post_id,'cf_previous_leasing_id', $plSpecial[ 'leasing_id' ] );			
-			update_post_meta($post_id,'cf_previous_leasing_status', $status );			
+			update_post_meta($post_id,'rm_previous_leasing_publish_date', $plSpecial[ 'public_date' ] );
+			update_post_meta($post_id,'rm_previous_leasing_expire_date', $plSpecial[ 'expire_date' ] );
+			update_post_meta($post_id,'rm_previous_leasing_description', $plSpecial[ 'description' ] );
+			update_post_meta($post_id,'rm_previous_leasing_apartment', $plSpecial[ 'apartment_ids' ] );
+			update_post_meta($post_id,'rm_previous_leasing_id', $plSpecial[ 'leasing_id' ] );			
+			update_post_meta($post_id,'rm_previous_leasing_status', $status );			
 		}	
 		
 		return $post_id;		
@@ -99,10 +99,10 @@ class CF_AR_Previous_Leasing_Special{
 	 */
 
 	function abr_previous_leasing_special_menu(){		
-		add_submenu_page( 'edit.php?post_type=leasing', __('Previous Leasing Special','ar'), __('Previous Leasing Special','ar'),'manage_options', 'previous-leasing-special',array($this,'cf_previous_leasing_special'));
+		add_submenu_page( 'edit.php?post_type=leasing', __('Previous Leasing Special','ar'), __('Previous Leasing Special','ar'),'manage_options', 'previous-leasing-special',array($this,'rm_previous_leasing_special'));
 	}
 
-	function cf_previous_leasing_special(){
+	function rm_previous_leasing_special(){
 		?>
 		
 		<div class="pr-leasing-header">
@@ -112,7 +112,7 @@ class CF_AR_Previous_Leasing_Special{
 		<div class="clear"></div>
 																				
 		<div class="pr-leasing-special"">
-		<?php echo CF_AR_Previous_Leasing_Special::abr_previous_leasing_special_content();?>
+		<?php echo RM_Previous_Leasing_Special::abr_previous_leasing_special_content();?>
 		</div><!--/*welcome-panel Ends*/-->
 		<?php
 	}
@@ -136,7 +136,7 @@ class CF_AR_Previous_Leasing_Special{
 		
 		$previous_leasing_list	=	new WP_Query( $cc_args );			
 
-		$fileName 	=	ABR_PLUGIN_DIR_PATH.'admin/premium/downloadablefiles/';		
+		$fileName 	=	RM_PLUGIN_DIR_PATH.'admin/premium/downloadablefiles/';		
 		$file = fopen($fileName.'previousleasing.csv', 'w');
 		 
 		// save the column headers
@@ -185,10 +185,10 @@ class CF_AR_Previous_Leasing_Special{
 					//	Get Previous Leasing Title
 					$prTitle 		=	__($listing->post_title,'ar');		
 
-					$publish_date 	=	get_post_meta($listing->ID,'cf_previous_leasing_publish_date', true);										
-					$expire_date 	=	get_post_meta($listing->ID,'cf_previous_leasing_expire_date', true);					
+					$publish_date 	=	get_post_meta($listing->ID,'rm_previous_leasing_publish_date', true);										
+					$expire_date 	=	get_post_meta($listing->ID,'rm_previous_leasing_expire_date', true);					
 
-					$oDesc 			=	get_post_meta($listing->ID,'cf_previous_leasing_description', true);
+					$oDesc 			=	get_post_meta($listing->ID,'rm_previous_leasing_description', true);
 
 					//	Strip All Images	
     				$desc 			= preg_replace("/<img[^>]+\>/i", " ", $oDesc); 
@@ -205,7 +205,7 @@ class CF_AR_Previous_Leasing_Special{
 						$readMore 	=	'';
 					}
 
-					$status			=	get_post_meta($listing->ID,'cf_previous_leasing_status', true);
+					$status			=	get_post_meta($listing->ID,'rm_previous_leasing_status', true);
 
 					$csvRow			=	array( $prTitle,$publish_date,$expire_date,$status,$desc );
 
@@ -250,31 +250,31 @@ class CF_AR_Previous_Leasing_Special{
 	 * Description: Display Page Content
 	 */
 	
-	function cf_previous_leasing_special_register_metabox(){
-		$cf_leasing = new_cmb2_box(array(
-			'id'            => 'cf_leasing_metabox',
+	function rm_previous_leasing_special_register_metabox(){
+		$rm_leasing = new_cmb2_box(array(
+			'id'            => 'rm_leasing_metabox',
 			'title'         => __('New Leasing Special','ar'),
 			'object_types'  => array('leasing')
 		));
-		$cf_leasing->add_field(array(
+		$rm_leasing->add_field(array(
 			'name' => __('Publishing Date','ar'),
-			'id'   => 'cf_leasing_publish_date',
+			'id'   => 'rm_leasing_publish_date',
 			'type' => 'text_date',
 		));
-		$cf_leasing->add_field(array(
+		$rm_leasing->add_field(array(
 			'name' => __('Expire Date','ar'),
-			'id'   => 'cf_leasing_expire_date',
+			'id'   => 'rm_leasing_expire_date',
 			'type' => 'text_date',
 		));
-		$cf_leasing->add_field( array(
+		$rm_leasing->add_field( array(
 			'name'    => __('Description','ar'),
-			'id'      => 'cf_leasing_description',
+			'id'      => 'rm_leasing_description',
 			'type'    => 'wysiwyg',
 			'options' => array('textarea_rows'=>5),
 		));
-		$cf_leasing->add_field(array(
+		$rm_leasing->add_field(array(
 			'name'     => __('Select Apartments','ar'),
-			'id'       => 'cf_leasing_apartment',
+			'id'       => 'rm_leasing_apartment',
 			'type'     => 'multicheck',
 			'show_option_none' =>false,
 			'options'          => Cf_Abr_Apartment::get_apartment_id_title_ARR()
@@ -307,7 +307,7 @@ class CF_AR_Previous_Leasing_Special{
 	 */
 
 	public function downloadLesingFile(){		
-		$file  = ABR_PLUGIN_DIR_PATH.'admin/premium/downloadablefiles/previousleasing.csv';
+		$file  = RM_PLUGIN_DIR_PATH.'admin/premium/downloadablefiles/previousleasing.csv';
 
 		if(file_exists($file)){
             header('Content-Description: File Transfer');
@@ -326,4 +326,4 @@ class CF_AR_Previous_Leasing_Special{
 	}
 }
 
-add_action('plugins_loaded',array('CF_AR_Previous_Leasing_Special','init'));
+add_action('plugins_loaded',array('RM_Previous_Leasing_Special','init'));

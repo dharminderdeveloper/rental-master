@@ -122,7 +122,7 @@ add_shortcode('ar_realestate_listing','abr_realestate_listing');
 			}
 			$out.='</ul>';
 		}
-		$out.=abr_cf_num_pagination($totalPages);
+		$out.=abr_rm_num_pagination($totalPages);
 		$out.='</div>';
 	}
 	else{
@@ -139,15 +139,15 @@ add_shortcode('ar_realestate_listing','abr_realestate_listing');
 	//	echo '<pre>';print_r( $realestate );exit; 
 	$alink				=	get_permalink($aid);
 	@$title			=	$realestate->post_title;	
-	$aPic				=	get_post_meta($aid,'cf_realestate_photo',true);
+	$aPic				=	get_post_meta($aid,'rm_realestate_photo',true);
 	/*
 	$bedRoomARR		=	wp_get_post_terms($aid,'apartment_bedrooms');
 	$bathRoomARR		=	wp_get_post_terms($aid,'apartment_bathrooms');
 	$aAvailableOpARR	=	wp_get_post_terms($aid,'apartment_availability_options');
 	$aAreaARR			=	wp_get_post_terms($aid,'apartment_area');	
-	$monthlyRent		=	get_post_meta($aid,'cf_apartment_rent_month',true);	
-	$cmid				=	get_post_meta($aid,'cf_apartment_community',true);
-	$location			=	get_post_meta($cmid,'cf_community_address',true);
+	$monthlyRent		=	get_post_meta($aid,'rm_apartment_rent_month',true);	
+	$cmid				=	get_post_meta($aid,'rm_apartment_community',true);
+	$location			=	get_post_meta($cmid,'rm_community_address',true);
 	*/
 	$o.='<li>';
 		$o.='<a class="aptttl" href="'.$alink.'"><img class="alignleft size-medium wp-image-43" src="'.$aPic.'" alt="apartment" width="300" height="193" /></a>';

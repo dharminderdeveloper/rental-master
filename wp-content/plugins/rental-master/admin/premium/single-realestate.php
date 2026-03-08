@@ -4,27 +4,27 @@ add_filter('the_content','abr_add_single_realestate_filter',99);
  function abr_add_single_realestate_filter($content){	 
 	global $post;
 	$reid			=	$post->ID;
-	$rePic			=	get_post_meta($reid,'cf_realestate_photo',true);	
+	$rePic			=	get_post_meta($reid,'rm_realestate_photo',true);	
 	$reBedroomTAX	=	wp_get_post_terms($reid,'listing_bedrooms');
 	$reBathroomTAX	=	wp_get_post_terms($reid,'listing_bathrooms');
-	$reLotSize		=	get_post_meta($reid,'cf_realestate_lot_size',true);		
-	$rePrice		=	get_post_meta($reid,'cf_realestate_listing_price',true);	
-	$regallery   	=	get_post_meta($reid,'cf_realestate_gallery',true);	
-	$vrIDs			=	get_post_meta($reid,'cf_apartment_vrids',true);
+	$reLotSize		=	get_post_meta($reid,'rm_realestate_lot_size',true);		
+	$rePrice		=	get_post_meta($reid,'rm_realestate_listing_price',true);	
+	$regallery   	=	get_post_meta($reid,'rm_realestate_gallery',true);	
+	$vrIDs			=	get_post_meta($reid,'rm_apartment_vrids',true);
 	$mlatlng 		=	get_post_meta($reid,"martygeocoderlatlng",true);
-	//$cmAdress		=	get_post_meta($cmid,'cf_community_address',true);
+	//$cmAdress		=	get_post_meta($cmid,'rm_community_address',true);
 	$mAd	 		=	get_post_meta($reid,"martygeocoderaddress",true);
-	$cmZip			=	get_post_meta($reid,'cf_community_zip_code',true);
-	$aptFeatures	=	get_post_meta($reid,'cf_apartment_features',true);
-	$video			=	get_post_meta($reid,'cf_realestate_video_url',true);
+	$cmZip			=	get_post_meta($reid,'rm_community_zip_code',true);
+	$aptFeatures	=	get_post_meta($reid,'rm_apartment_features',true);
+	$video			=	get_post_meta($reid,'rm_realestate_video_url',true);
 	$latlang		=	Cf_Abr_Apartment::lat_long_explode($mlatlng);
 
 	//	Get All Listing Paragraphs
-	$reHeating		= 	get_post_meta($reid,'cf_realestate_heating_cooling',true);	
-	$listFeatures	= 	get_post_meta($reid,'cf_realestate_listing_features',true);
-	$shInformation  = 	get_post_meta($reid,'cf_realestate_school_information',true);
-	$ctInformation 	=	get_post_meta($reid,'cf_realestate_community_information',true);
-	$utInformation 	=	get_post_meta($reid,'cf_realestate_utilities_information',true);
+	$reHeating		= 	get_post_meta($reid,'rm_realestate_heating_cooling',true);	
+	$listFeatures	= 	get_post_meta($reid,'rm_realestate_listing_features',true);
+	$shInformation  = 	get_post_meta($reid,'rm_realestate_school_information',true);
+	$ctInformation 	=	get_post_meta($reid,'rm_realestate_community_information',true);
+	$utInformation 	=	get_post_meta($reid,'rm_realestate_utilities_information',true);
 
 	if($reBedroomTAX){$re_bedroom=$reBedroomTAX[0]->name;}else{$re_bedroom= '';}
 	if($reBathroomTAX){$re_bathroom=$reBathroomTAX[0]->name;}else{	$re_bathroom= '';}
@@ -52,10 +52,10 @@ add_filter('the_content','abr_add_single_realestate_filter',99);
 ?>	
 			<!--
 			<div class="quick_info_item">
-				<div class="cf_info_image">
-					<span class="cf_item_icon">ssss</span>
+				<div class="rm_info_image">
+					<span class="rm_item_icon">ssss</span>
 				</div>
-				<div class="cf_info_desc">ss</div>
+				<div class="rm_info_desc">ss</div>
 			</div>	
 			<div class="quick_info_item"></div>	
 			<div class="quick_info_item"></div>	
@@ -106,7 +106,7 @@ add_filter('the_content','abr_add_single_realestate_filter',99);
 
 	<div class="apLoc">	
 	<?php
-		$mapLocation 	=	get_post_meta($reid,'cf_realestate_location',true);	
+		$mapLocation 	=	get_post_meta($reid,'rm_realestate_location',true);	
 		//	echo '<pre>'; print_r( $mapLocation ); exit; 
 
 		if($mapLocation){	

@@ -94,8 +94,8 @@ function abr_current_post_type(){
 */
 function abr_post_limit_msg($name){
 	$msg='';
-	$msg	.=	'<h1>Sorry !</h1> <p> Currently you are using trial version of <b>About Rentals</b> <p>';
-	$msg	.=	'<p>To add more <b>'.$name.'</b> Please get your <a href="'.ABR_PLUGIN_MASTER_URL.'">Premium Version</a> <p>';
+	$msg	.=	'<h1>Sorry !</h1> <p> Currently you are using trial version of <b>Rental Master</b> <p>';
+	$msg	.=	'<p>To add more <b>'.$name.'</b> Please get your <a href="'.RM_PLUGIN_MASTER_URL.'">Premium Version</a> <p>';
 	$msg	.=	'<p><a href="'.admin_url().'">Back to Dashboard</a></p>';
 	?><style>#error-page {margin-top: 50px;text-align: center;}</style><?php
 	echo wp_die($msg);

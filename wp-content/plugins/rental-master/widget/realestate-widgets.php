@@ -1,13 +1,13 @@
 <?php
 if(!defined('ABSPATH')) exit;
-class CF_AR_Realestate_Widgets extends WP_Widget{
+class RM_Realestate_Widgets extends WP_Widget{
 
 	public function __construct(){
 		$widget_ops = array(
 			'classname' => 'realestate_filters_widget',
 			'description' => 'Realestate Search Filters for sidebar',
 		);
-		parent::__construct('realestate_filters_widget','About Rentals Realestate Search Widget',$widget_ops);
+		parent::__construct('realestate_filters_widget','Rental Master Realestate Search Widget',$widget_ops);
 	}
 
 	public function widget($args,$instance){
@@ -46,7 +46,7 @@ class CF_AR_Realestate_Widgets extends WP_Widget{
 			echo '<h3>'.$title.'</h3>';
 		}
 
-		echo '<form class="reSearch" method="get" action="'.get_permalink(About_rental_cf_exe::get_id_by_slug('realestate-listing')).'">';
+		echo '<form class="reSearch" method="get" action="'.get_permalink(About_rental_rm_exe::get_id_by_slug('realestate-listing')).'">';
 		echo'<ul>';
 		if($category=='on'){
 			echo '<li>';
@@ -180,4 +180,9 @@ class CF_AR_Realestate_Widgets extends WP_Widget{
 		echo '  <input class="checkAll" type="button" value="'.__('Select All','ar').'">';
 	}
 }
-add_action('widgets_init',create_function('','return register_widget("CF_AR_Realestate_Widgets");'));
+add_action(
+	'widgets_init',
+	static function() {
+		return register_widget( 'RM_Realestate_Widgets' );
+	}
+);

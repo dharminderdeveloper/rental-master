@@ -1,6 +1,6 @@
 <?php
 if(!defined('ABSPATH')) exit;
-class CF_AR_Apartments_Of_Spec_Comm{
+class RM_Apartments_Of_Spec_Comm{
 	public static function init(){
         $class = __CLASS__;
         new $class;
@@ -20,7 +20,7 @@ class CF_AR_Apartments_Of_Spec_Comm{
 				'post_status'	=>'publish',
 				'meta_query' 	=> array( 
 					array(
-						'key' 		=> 'cf_apartment_community',
+						'key' 		=> 'rm_apartment_community',
 						'value'		=> $cmid,
 						'compare'	=> 'IN' )),
 				'suppress_filters' => true);
@@ -52,11 +52,11 @@ class CF_AR_Apartments_Of_Spec_Comm{
 					$out.=abr_apartment_post($mpost);
 				}
 				$out.='</ul>';
-				$out.=abr_cf_num_pagination($totalPages);
+				$out.=abr_rm_num_pagination($totalPages);
 				return $out;
 			}
 		}
 	}
 
 }
-add_action('plugins_loaded',array('CF_AR_Apartments_Of_Spec_Comm','init'));
+add_action('plugins_loaded',array('RM_Apartments_Of_Spec_Comm','init'));

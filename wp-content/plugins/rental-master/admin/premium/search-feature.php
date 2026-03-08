@@ -25,11 +25,11 @@ function abr_search_listing(){
 	}	
 	//MIN(pm.meta_value) as minimum,MAX(pm.meta_value) as maximum
 	/*
-	$priceLimitArray = $wpdb->get_results('SELECT pm.meta_value FROM '.$wpdb->prefix.'postmeta AS pm WHERE pm.meta_key="cf_apartment_rent_month" AND pm.meta_value>="1000" ORDER BY pm.meta_value DESC');
+	$priceLimitArray = $wpdb->get_results('SELECT pm.meta_value FROM '.$wpdb->prefix.'postmeta AS pm WHERE pm.meta_key="rm_apartment_rent_month" AND pm.meta_value>="1000" ORDER BY pm.meta_value DESC');
 	echo '<pre>'; print_r( $priceLimitArray );echo '</pre>';exit; 
 	*/
 
-	$priceLimitArray = $wpdb->get_results('SELECT GROUP_CONCAT(pm.meta_value) as minimum FROM '.$wpdb->prefix.'postmeta AS pm WHERE pm.meta_key="cf_apartment_rent_month"');
+	$priceLimitArray = $wpdb->get_results('SELECT GROUP_CONCAT(pm.meta_value) as minimum FROM '.$wpdb->prefix.'postmeta AS pm WHERE pm.meta_key="rm_apartment_rent_month"');
 
 	if( !empty( $priceLimitArray )){		
 		$priceArray 	=	explode(',',$priceLimitArray[0]->minimum);
@@ -83,7 +83,7 @@ function abr_search_listing(){
 			if( $orderArray[0] == 'date'){
 				$args['orderby'] = 'date';
 			}else if( $orderArray[0] == 'price'){
-				$args['orderby'] = 'cf_apartment_rent_month';
+				$args['orderby'] = 'rm_apartment_rent_month';
 			}else{				
 				$args['orderby'] = 'post_title';
 			}			
@@ -116,7 +116,7 @@ function abr_search_listing(){
 						
 		if( !empty( $priceRangeArray )){	
 			$price_min_tax =	array( 
-									'key'     => 'cf_apartment_rent_month', 
+									'key'     => 'rm_apartment_rent_month', 
 									'value'   => (int)$priceRangeArray[0],
 									'compare' => '>=',
 									'type'          => 'NUMERIC'
@@ -124,7 +124,7 @@ function abr_search_listing(){
 			$metaQueryArray[] = $price_min_tax;
 															
 			$price_max_tax =	array( 
-									'key'     => 'cf_apartment_rent_month', 
+									'key'     => 'rm_apartment_rent_month', 
 									'value'   => (int)$priceRangeArray[1],
 									'compare' => '<=',
 									'type'          => 'NUMERIC'
@@ -362,12 +362,12 @@ function abr_search_listing(){
 						foreach( $searchObject->posts as $post ){
 							$aID =	$post->ID;
 					
-							$apartmentThumnail	=	get_post_meta( $aID, 'cf_apartment_pic',true  );
+							$apartmentThumnail	=	get_post_meta( $aID, 'rm_apartment_pic',true  );
 							if( empty( $apartmentThumnail )){
 								$apartmentThumnail = '';
 							}
 							$apartmentUrl 	=	get_permalink( $aID );
-							$apartmentRent 	=	get_post_meta( $aID, 'cf_apartment_rent_month',true  );	
+							$apartmentRent 	=	get_post_meta( $aID, 'rm_apartment_rent_month',true  );	
 							$aBedrooms	 	=	wp_get_post_terms($aID,'apartment_bedrooms');
 							$aBedroom 		=	(isset($aBedrooms[0]->name))?$aBedrooms[0]->name:0;
 							$aBathrooms 	=	wp_get_post_terms($aID,'apartment_bathrooms');
@@ -376,8 +376,8 @@ function abr_search_listing(){
 							$aPlotArea 		=	(isset($aPlotAreas[0]->name))?$aPlotAreas[0]->name:0;
 							$capacities 	=	wp_get_post_terms($aID,'apartment_rental_occupancy');
 							$capacity 		=	(isset($capacities[0]->name))?$capacities[0]->name:0;
-							$cmid			=	get_post_meta($aID,'cf_apartment_community',true);
-							$cmAdress		=	get_post_meta($cmid,'cf_community_address',true);
+							$cmid			=	get_post_meta($aID,'rm_apartment_community',true);
+							$cmAdress		=	get_post_meta($cmid,'rm_community_address',true);
 							$data =	getLatLong( $cmAdress );	
 ?>							
 							<script>

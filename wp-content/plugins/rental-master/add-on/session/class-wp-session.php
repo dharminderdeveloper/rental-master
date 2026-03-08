@@ -15,14 +15,14 @@ class Recursive_ArrayAccess implements ArrayAccess{
 		foreach($data as $key => $value){ if($value instanceof self){ $data[$key]=$value->toArray(); } }
 		return $data;
 	}
-	public function offsetExists($offset){ return isset($this->container[$offset]); }
-	public function offsetGet($offset){ return isset($this->container[$offset]) ? $this->container[$offset]:null; }
-	public function offsetSet($offset,$data){
+	public function offsetExists( mixed $offset ): bool { return isset($this->container[$offset]); }
+	public function offsetGet( mixed $offset ): mixed { return isset($this->container[$offset]) ? $this->container[$offset]:null; }
+	public function offsetSet( mixed $offset, mixed $data ): void {
 		if(is_array($data )){ $data=new self($data); }
 		if($offset===null){ $this->container[]=$data; }else{ $this->container[$offset]=$data; }
 		$this->dirty=true;
 	}
-	public function offsetUnset($offset){
+	public function offsetUnset( mixed $offset ): void {
 		unset($this->container[$offset]);
 		$this->dirty=true;
 	}
@@ -104,12 +104,12 @@ final class WP_Session extends Recursive_ArrayAccess implements Iterator, Counta
 	public function session_started(){ return !!self::$instance; }
 	public function cache_expiration(){	return $this->expires; }
 	public function reset(){ $this->container=array(); }
-	public function current(){ return current($this->container); }
-	public function key(){ return key($this->container); }
-	public function next(){	next($this->container);	}
-	public function rewind(){ reset($this->container); }
-	public function valid(){ return $this->offsetExists($this->key()); }
-	public function count(){ return count($this->container); }
+	public function current(): mixed { return current($this->container); }
+	public function key(): mixed { return key($this->container); }
+	public function next(): void {	next($this->container);	}
+	public function rewind(): void { reset($this->container); }
+	public function valid(): bool { return $this->offsetExists($this->key()); }
+	public function count(): int { return count($this->container); }
 }
 function wp_session_cache_expire(){ $wp_session=WP_Session::get_instance(); return $wp_session->cache_expiration(); }
 function wp_session_commit(){ wp_session_write_close(); }

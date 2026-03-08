@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ruleset name="RentalMaster">
+	<description>PHPCS rules for Rental master WordPress.org compliance.</description>
+
+	<file>rental-masters.php</file>
+	<file>rental-master.php</file>
+	<file>uninstall.php</file>
+	<file>includes</file>
+	<file>public/templates</file>
+
+	<exclude-pattern>*/cmb2/*</exclude-pattern>
+	<exclude-pattern>*/add-on/*</exclude-pattern>
+	<exclude-pattern>*/admin/premium/*</exclude-pattern>
+	<exclude-pattern>*/admin/*.php</exclude-pattern>
+	<exclude-pattern>*/widget/*</exclude-pattern>
+	<exclude-pattern>*/rm-exe.php</exclude-pattern>
+
+	<arg name="basepath" value="."/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<rule ref="WordPress-Core"/>
+	<rule ref="WordPress-Docs"/>
+	<rule ref="WordPress-Extra"/>
+	<rule ref="WordPress.Security.EscapeOutput">
+		<severity>8</severity>
+	</rule>
+</ruleset>

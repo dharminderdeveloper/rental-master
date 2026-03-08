@@ -1,5 +1,5 @@
 <?php
-class CF_AR_Email{
+class RM_Email{
 	public static function init(){
         $class = __CLASS__;
         new $class;
@@ -37,8 +37,8 @@ class CF_AR_Email{
 								"Reply-To: ".$from."  <".$email." >",
 								"From: ".$from."<myname@example.com>"
 							);
-				$msg	=	CF_AR_Email::abr_email_template_1($fname,$lname,$dob,$caddres,$chomphon,$cworpho,$email,$rname,$rphone,$remail,$laplifor,$comm_str,$montbegn,$bedromned,$paddres,$pphone);
-				CF_AR_Email::abr_send_email($to,$from,'Application Form',$msg,$headers);
+				$msg	=	RM_Email::abr_email_template_1($fname,$lname,$dob,$caddres,$chomphon,$cworpho,$email,$rname,$rphone,$remail,$laplifor,$comm_str,$montbegn,$bedromned,$paddres,$pphone);
+				RM_Email::abr_send_email($to,$from,'Application Form',$msg,$headers);
 				$response=array(
 					'response'	=>1,
 					'message'		=>'Email sent successfully',
@@ -73,7 +73,7 @@ class CF_AR_Email{
 								"From: ".$sname."<myname@example.com>"
 							);
 				$multiple_recipients = array($admin,$remail1,$remail2,$remail3,$remail4,$remail5,$semail);
-				$msg	=	CF_AR_Email::abr_email_template_2($message,$semail,$sname);
+				$msg	=	RM_Email::abr_email_template_2($message,$semail,$sname);
 				$mail	=	wp_mail($multiple_recipients,$email_subject,$msg,$headers);
 				
 				remove_filter('wp_mail_content_type',array($this,'abr_email_content_type'));
@@ -167,4 +167,4 @@ class CF_AR_Email{
 	}*/
 	
 }
-add_action('plugins_loaded',array('CF_AR_Email','init'));
+add_action('plugins_loaded',array('RM_Email','init'));

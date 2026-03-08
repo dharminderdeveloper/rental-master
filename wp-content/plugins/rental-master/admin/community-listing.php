@@ -23,11 +23,21 @@ function abr_community_listing_default(){
 				$cmid	=	$post->ID;
 				$title	=	$post->post_title;
 				$link	=	get_permalink($cmid);
-				$pic	=	get_post_meta($cmid,'cf_community_pic',true);
+				if ( is_wp_error( $link ) || empty( $link ) ) {
+					$link = '#';
+				}
+				$pic	=	get_post_meta($cmid,'rm_community_pic',true);
+				if ( is_wp_error( $pic ) ) {
+					$pic = '';
+				}
 				$owners	=	wp_get_post_terms($cmid,'community_owner');
 				$types	=	wp_get_post_terms($cmid,'community_type');
 				$cats	=	wp_get_post_terms($cmid,'community_categories');
 				$locs	=	wp_get_post_terms($cmid,'community_location');
+				if ( is_wp_error( $owners ) ) { $owners = array(); }
+				if ( is_wp_error( $types ) ) { $types = array(); }
+				if ( is_wp_error( $cats ) ) { $cats = array(); }
+				if ( is_wp_error( $locs ) ) { $locs = array(); }
 				$html.='<li>';
 				if($pic){
 					$html.='<a href="'.$link.'">';

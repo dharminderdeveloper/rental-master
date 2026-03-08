@@ -22,42 +22,42 @@ class AR_Virtual_Tours{
 	// Register Custom Post Type
 	public static function abr_virtualtour_post_type() {
 		$labels = array(
-			'name'                  => _x( 'Virtual Tours', 'Post Type General Name', 'cf' ),
-			'singular_name'         => _x( 'Virtual Tour', 'Post Type Singular Name', 'cf' ),
-			'menu_name'             => __( 'Virtual Tours', 'cf' ),
-			'name_admin_bar'        => __( 'Virtual Tours', 'cf' ),
-			'archives'              => __( 'Item Archives', 'cf' ),
-			'parent_item_colon'     => __( 'Parent Item:', 'cf' ),
-			'all_items'             => __( 'Manage Virtual Tours', 'cf' ),
-			'add_new_item'          => __( 'Add New VT', 'cf' ),
-			'add_new'               => __( 'Add Virtual Tour', 'cf' ),
-			'new_item'              => __( 'New VT', 'cf' ),
-			'edit_item'             => __( 'Edit VT', 'cf' ),
-			'update_item'           => __( 'Update VT', 'cf' ),
-			'view_item'             => __( 'View VT', 'cf' ),
-			'search_items'          => __( 'Search Virtual Tours', 'cf' ),
-			'not_found'             => __( 'Not found', 'cf' ),
-			'not_found_in_trash'    => __( 'Not found in Trash', 'cf' ),
-			'featured_image'        => __( 'Featured Image', 'cf' ),
-			'set_featured_image'    => __( 'Set featured image', 'cf' ),
-			'remove_featured_image' => __( 'Remove featured image', 'cf' ),
-			'use_featured_image'    => __( 'Use as featured image', 'cf' ),
-			'insert_into_item'      => __( 'Insert into item', 'cf' ),
-			'uploaded_to_this_item' => __( 'Uploaded to this item', 'cf' ),
-			'items_list'            => __( 'Items list', 'cf' ),
-			'items_list_navigation' => __( 'Items list navigation', 'cf' ),
-			'filter_items_list'     => __( 'Filter items list', 'cf' ),
+			'name'                  => _x( 'Virtual Tours', 'Post Type General Name', 'rm' ),
+			'singular_name'         => _x( 'Virtual Tour', 'Post Type Singular Name', 'rm' ),
+			'menu_name'             => __( 'Virtual Tours', 'rm' ),
+			'name_admin_bar'        => __( 'Virtual Tours', 'rm' ),
+			'archives'              => __( 'Item Archives', 'rm' ),
+			'parent_item_colon'     => __( 'Parent Item:', 'rm' ),
+			'all_items'             => __( 'Manage Virtual Tours', 'rm' ),
+			'add_new_item'          => __( 'Add New VT', 'rm' ),
+			'add_new'               => __( 'Add Virtual Tour', 'rm' ),
+			'new_item'              => __( 'New VT', 'rm' ),
+			'edit_item'             => __( 'Edit VT', 'rm' ),
+			'update_item'           => __( 'Update VT', 'rm' ),
+			'view_item'             => __( 'View VT', 'rm' ),
+			'search_items'          => __( 'Search Virtual Tours', 'rm' ),
+			'not_found'             => __( 'Not found', 'rm' ),
+			'not_found_in_trash'    => __( 'Not found in Trash', 'rm' ),
+			'featured_image'        => __( 'Featured Image', 'rm' ),
+			'set_featured_image'    => __( 'Set featured image', 'rm' ),
+			'remove_featured_image' => __( 'Remove featured image', 'rm' ),
+			'use_featured_image'    => __( 'Use as featured image', 'rm' ),
+			'insert_into_item'      => __( 'Insert into item', 'rm' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this item', 'rm' ),
+			'items_list'            => __( 'Items list', 'rm' ),
+			'items_list_navigation' => __( 'Items list navigation', 'rm' ),
+			'filter_items_list'     => __( 'Filter items list', 'rm' ),
 		);
 		$args = array(
-			'label'                 => __( 'Virtual Tour', 'cf' ),
-			'description'           => __( 'Virtual Tours', 'cf' ),
+			'label'                 => __( 'Virtual Tour', 'rm' ),
+			'description'           => __( 'Virtual Tours', 'rm' ),
 			'labels'                => $labels,
 			'supports'              => array( 'title', 'editor', 'thumbnail', 'custom-fields', ),
 			'hierarchical'          => false,
 			'public'                => true,
 			'show_ui'               => true,
 			'show_in_menu'          => true,
-			'menu_icon'             => ABR_PLUGIN_DIR_URL.'img/vr.png',
+			'menu_icon'             => 'dashicons-format-video',
 			'show_in_admin_bar'     => true,
 			'show_in_nav_menus'     => true,
 			'can_export'            => true,
@@ -70,7 +70,7 @@ class AR_Virtual_Tours{
 	}
 	
 	public static function virtual_tours_add_meta_box() {
-		add_meta_box('virtual_tours-virtual-tours',__('Virtual Tours','virtual_tours'),array($this,'abr_virtual_tours_html'),'virtualtour','normal','default');
+		add_meta_box('virtual_tours-virtual-tours',__('Virtual Tours','virtual_tours'),array(__CLASS__,'abr_virtual_tours_html'),'virtualtour','normal','default');
 	}
 	
 	public static function abr_get_image_id($image_url) {
@@ -107,7 +107,7 @@ class AR_Virtual_Tours{
 		if(!empty($media_file)){ $strFile = $media_file; } ?>
         <script type = "text/javascript">
 		var file_frame;
-		jQuery('#upload_image_button').live('click',function(podcast){
+		jQuery(document).on('click','#upload_image_button',function(podcast){
 			podcast.preventDefault();
 			if(file_frame){file_frame.open();return}
 			file_frame=wp.media.frames.file_frame=wp.media({

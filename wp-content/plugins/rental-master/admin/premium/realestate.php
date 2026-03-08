@@ -14,12 +14,12 @@ class Cf_Abr_RealEstate{
 			add_action('init',array($this,'abr_realestate_init'));
 		}
 		add_action('init',array($this,'abr_create_realestate_taxonomies'),0);		
-		add_action('cmb2_admin_init',array($this,'cf_realestate_register_metabox'));
+		add_action('cmb2_admin_init',array($this,'rm_realestate_register_metabox'));
 		add_action('admin_menu',array($this,'abr_remove_realestate_meta_box'));
 		/*
 		add_action('admin_menu',array($this,'abr_remove_apartment_meta_box'));
-		add_action('cmb2_admin_init',array($this,'cf_apartment_availability_options_term_metabox'));
-		add_action('cmb2_admin_init',array($this,'cf_apartment_amenities_term_metabox'));
+		add_action('cmb2_admin_init',array($this,'rm_apartment_availability_options_term_metabox'));
+		add_action('cmb2_admin_init',array($this,'rm_apartment_amenities_term_metabox'));
 		add_action('manage_posts_columns',array($this,'abr_manage_columns' ),10,2 );
 		add_filter('manage_apartment_posts_columns',array($this,'craigslist_columns_head'));
 		add_action('manage_apartment_posts_custom_column', array($this,'craigslist_columns_content'), 10, 2);
@@ -73,7 +73,7 @@ class Cf_Abr_RealEstate{
 			'public'                => true,
 			'show_ui'               => true,
 			'show_in_menu'          => true,
-			'menu_icon'             => ABR_PLUGIN_DIR_URL.'img/apartment.png',
+			'menu_icon'             => 'dashicons-admin-home',
 			'show_in_admin_bar'     => true,
 			'show_in_nav_menus'     => true,
 			'can_export'            => true,
@@ -261,76 +261,76 @@ class Cf_Abr_RealEstate{
 		*/
 	}
 	
-	function cf_realestate_register_metabox(){
-		$cf_realestate = new_cmb2_box(array(
-			'id'=>'cf_realestate_metabox',
+	function rm_realestate_register_metabox(){
+		$rm_realestate = new_cmb2_box(array(
+			'id'=>'rm_realestate_metabox',
 			'title'=>__('New Realestate','ar'),
 			'object_types'=>array('realestate')
 		));
 		
-		$cf_realestate->add_field( array(
+		$rm_realestate->add_field( array(
 			'name' => __( 'Primary Photo','ar'),
-			'id'   => 'cf_realestate_photo',
+			'id'   => 'rm_realestate_photo',
 			'type' => 'file',
 		));
 		
-		$cf_realestate->add_field( array(
+		$rm_realestate->add_field( array(
 			'name' => __( 'RealEstate Gallery','ar'),
-			'id'   => 'cf_realestate_gallery',
+			'id'   => 'rm_realestate_gallery',
 			'type' => 'file_list',
 		));
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name'      =>	__('Realestate Category','ar'),
-			'id'        =>	'cf_realestate_category',
+			'id'        =>	'rm_realestate_category',
 			'type'		=>	'taxonomy_select',
 			'taxonomy'	=>	'realestate_category',
 			'show_option_none' =>true
 		));
 		/*
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name'      =>	__('Listing Type','ar'),
-			'id'        =>	'cf_realestate_listing_type',
+			'id'        =>	'rm_realestate_listing_type',
 			'type'		=>	'taxonomy_select',
 			'taxonomy'	=>	'listing_type',
 			'show_option_none' =>true
 		));
 		*/
 
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name'      =>	__('Construction Type','ar'),
-			'id'        =>	'cf_realestate_construction_type',
+			'id'        =>	'rm_realestate_construction_type',
 			'type'		=>	'taxonomy_select',
 			'taxonomy'	=>	'construction_type_editor',
 			'show_option_none' =>true
 		));
 
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name'		=> __('Listing Amenity','ar'),
-			'id'		=> 'cf_realestate_listing_amenity',
+			'id'		=> 'rm_realestate_listing_amenity',
 			'type'		=> 'multicheck',
-			'options'	=>  About_rental_cf_exe::get_terms_id_title_ARR('listing_amenity_editor')
+			'options'	=>  About_rental_rm_exe::get_terms_id_title_ARR('listing_amenity_editor')
 		));
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name'      =>	__('Listing Style','ar'),
-			'id'        =>	'cf_realestate_style_editor',
+			'id'        =>	'rm_realestate_style_editor',
 			'type'		=>	'taxonomy_select',
 			'taxonomy'	=>	'style_editor',
 			'show_option_none' =>true
 		));
 		
 
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __(' Property Address','ar'),
-			'id'   => 'cf_realestate_location',
+			'id'   => 'rm_realestate_location',
 			'type' => 'text',
 			'after_row'=> 'Cf_Abr_RealEstate::custom_map_for_location'
 		));						
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('Listing Short Description','ar'),
-			'id'   => 'cf_realestate_short_description',
+			'id'   => 'rm_realestate_short_description',
 			'type' => 'textarea_small'
 		));
 		
@@ -338,100 +338,100 @@ class Cf_Abr_RealEstate{
 			$yearbuilt[$i]	=	$i;
 		}	
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name'    =>	__('Year Built','ar'),
-			'id'      =>	'cf_realestate_year_built',
+			'id'      =>	'rm_realestate_year_built',
 			'desc'    => 	'Year Built',
 			'type'    =>	'pw_select',
 			'options' =>	$yearbuilt,
 		));
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __(' Lot Size','ar'),
-			'id'   => 'cf_realestate_lot_size',
+			'id'   => 'rm_realestate_lot_size',
 			'type' => 'text'
 		));		
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('Long Long Description','ar'),
-			'id'   => 'cf_realestate_long_description',
+			'id'   => 'rm_realestate_long_description',
 			'type' => 'wysiwyg',
 		));
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('Other Features','ar'),
-			'id'   => 'cf_realestate_other_features',
+			'id'   => 'rm_realestate_other_features',
 			'type' => 'wysiwyg',
 		));		
 				
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('Heating and Cooling','ar'),
-			'id'   => 'cf_realestate_heating_cooling',
+			'id'   => 'rm_realestate_heating_cooling',
 			'type' => 'wysiwyg',
 		));
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('Listing Price','ar'),
-			'id'   => 'cf_realestate_listing_price',
+			'id'   => 'rm_realestate_listing_price',
 			'type' => 'text'
 		));
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('Listing Features','ar'),
-			'id'   => 'cf_realestate_listing_features',
+			'id'   => 'rm_realestate_listing_features',
 			'type' => 'wysiwyg',
 		));
 
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name'     =>	__('Listing Bedrooms','ar'),
-			'id'       =>	'cf_realestate_listing_bedrooms',
+			'id'       =>	'rm_realestate_listing_bedrooms',
 			'type'     =>	'taxonomy_select',
 			'taxonomy' =>	'listing_bedrooms',
 			'show_option_none' =>false
 		));
 
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name'     =>	__('Listing Bathrooms','ar'),
-			'id'       =>	'cf_realestate_listing_bathrooms',
+			'id'       =>	'rm_realestate_listing_bathrooms',
 			'type'     =>	'taxonomy_select',
 			'taxonomy' =>	'listing_bathrooms',
 			'show_option_none' =>false
 		));
 		
-		$cf_realestate->add_field( array(
+		$rm_realestate->add_field( array(
 			'name' => __('Listing Video Link ','ar'),
 			'desc' => __('Enter a Youtube URL','ar' ),
-			'id'   => 'cf_realestate_video_url',
+			'id'   => 'rm_realestate_video_url',
 			'type' => 'oembed',
 		));
 
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('Listing School Information','ar'),
-			'id'   => 'cf_realestate_school_information',
+			'id'   => 'rm_realestate_school_information',
 			'type' => 'wysiwyg',
 		));	
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('Listing Community Information','ar'),
-			'id'   => 'cf_realestate_community_information',
+			'id'   => 'rm_realestate_community_information',
 			'type' => 'wysiwyg',
 		));	
 		
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('Listing Utilities Information','ar'),
-			'id'   => 'cf_realestate_utilities_information',
+			'id'   => 'rm_realestate_utilities_information',
 			'type' => 'wysiwyg',
 		));	
 
-		$cf_realestate->add_field(array(
+		$rm_realestate->add_field(array(
 			'name' => __('MLS Link for More Information','ar'),
-			'id'   => 'cf_realestate_mls_link',
+			'id'   => 'rm_realestate_mls_link',
 			'type' => 'text'
 		));
 	}	
 	
 	function custom_map_for_location( $field_args, $field ) {
-		$mapLocation 	=	urlencode(get_post_meta($field->object_id,'cf_realestate_location',true));		
+		$mapLocation 	=	urlencode(get_post_meta($field->object_id,'rm_realestate_location',true));		
 		if( $mapLocation )
 		return '<div class="cmb-row table-layout" data-fieldtype="text"><div style="width: 100%" id=""><iframe width="100%" height="300" src="https://maps.google.com/maps?width=100%&height=300&hl=en&q='.$mapLocation.'&ie=UTF8&t=&z=14&iwloc=B&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.mapsdirections.info/en/custom-google-maps/">Create Google Map</a> by <a href="https://www.mapsdirections.info/en/">Measure area on map</a></iframe></div><br /></div>';	
 	}	

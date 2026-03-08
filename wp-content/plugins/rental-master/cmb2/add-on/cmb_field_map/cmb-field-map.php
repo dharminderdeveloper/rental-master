@@ -68,7 +68,7 @@ class PW_CMB2_Field_Google_Maps{
 	 * Enqueue scripts and styles
 	 */
 	public function setup_admin_scripts() {
-		$map_api=ABR_MAP_API_KEY;
+		$map_api=RM_MAP_API_KEY;
 		wp_register_script('pw-google-maps-api', '//maps.googleapis.com/maps/api/js?libraries=places&key='.$map_api, null, null );
 		wp_enqueue_script('pw-google-maps', plugins_url( 'js/script.js', __FILE__ ), array( 'pw-google-maps-api' ), self::VERSION );
 	}

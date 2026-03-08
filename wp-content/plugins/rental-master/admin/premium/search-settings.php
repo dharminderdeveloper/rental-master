@@ -13,7 +13,7 @@
 * Desscription: Creates a menu to manage search settings
 */
 function abr_search_settings(){
-	add_menu_page(__('Search Settings','ar'),__('Search Settings','ar'),'administrator','abr-search-settings','abr_search_settings_page',ABR_PLUGIN_DIR_URL.'/img/application-from.png',0);
+	add_menu_page(__('Search Settings','ar'),__('Search Settings','ar'),'administrator','abr-search-settings','abr_search_settings_page','dashicons-search',0);
 }
 add_action( 'admin_menu', 'abr_search_settings' );
 	

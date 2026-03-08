@@ -1,13 +1,13 @@
 <?php
 if(!defined('ABSPATH')) exit;
-class CF_AR_Apartment_Widgets extends WP_Widget{
+class RM_Apartment_Widgets extends WP_Widget{
 
 	public function __construct(){
 		$widget_ops = array(
 			'classname' => 'apartment_filters_widget',
 			'description' => 'Apartment Search Filters for sidebar',
 		);
-		parent::__construct('apartment_filters_widget','About Rentals Sidebar Search Widget',$widget_ops);
+		parent::__construct('apartment_filters_widget','Rental Master Sidebar Search Widget',$widget_ops);
 	}
 
 	public function widget($args,$instance){
@@ -53,7 +53,7 @@ class CF_AR_Apartment_Widgets extends WP_Widget{
 		else{
 			echo '<h3>'.$title.'</h3>';
 		}
-		echo '<form class="aptSearch" method="get" action="'.get_permalink(About_rental_cf_exe::get_id_by_slug('apartments-listing')).'">';
+		echo '<form class="aptSearch" method="get" action="'.get_permalink(About_rental_rm_exe::get_id_by_slug('apartments-listing')).'">';
 		echo'<ul>';
 		if($leasing=='on'){
 			echo '<li>';
@@ -220,4 +220,9 @@ class CF_AR_Apartment_Widgets extends WP_Widget{
 	}
 
 }
-add_action('widgets_init',create_function('','return register_widget("CF_AR_Apartment_Widgets");'));
+add_action(
+	'widgets_init',
+	static function() {
+		return register_widget( 'RM_Apartment_Widgets' );
+	}
+);

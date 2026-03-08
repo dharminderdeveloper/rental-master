@@ -35,7 +35,7 @@ function abr_featured_apartments(){
 			$out.=abr_apartment_post($mpost);
 		}
 		$out.='</ul>';
-		$out.=abr_cf_num_pagination($totalPages);
+		$out.=abr_rm_num_pagination($totalPages);
 		$out.='</div>';
 	}
 	return $out;
@@ -57,7 +57,7 @@ function abr_get_featured_apartments(){
 		'numberposts'		=>	-1,
 		'meta_query' 		=>	array(
 			   array(
-				   'key' => 'cf_apartment_featured',
+				   'key' => 'rm_apartment_featured',
 				   'value' => 'on',
 				   'compare' => '=',
 			   )

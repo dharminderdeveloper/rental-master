@@ -1,5 +1,5 @@
 <?php
-class CF_AR_Apartment_Application{
+class RM_Apartment_Application{
 	public static function init(){
         $class = __CLASS__;
         new $class;
@@ -77,7 +77,7 @@ class CF_AR_Apartment_Application{
 			 
 				  <select id="communities" multiple="multiple" size="5" name="communities[]" style="width:58.5%" >
 				  <?php
-					$aptUtilitiesTAX	=	About_rental_cf_exe::get_terms_id_title_ARR('apartment_utilities');
+					$aptUtilitiesTAX	=	About_rental_rm_exe::get_terms_id_title_ARR('apartment_utilities');
 					if($aptUtilitiesTAX){
 						foreach($aptUtilitiesTAX as $tid=>$term){
 							echo '<option value="'.$term.'">'.$term.'</option>';
@@ -133,7 +133,7 @@ class CF_AR_Apartment_Application{
 	}
 	
 public function email_favorites_to_friends(){
-	$CF_AR_Apartment_Application= new CF_AR_Apartment_Application();
+	$RM_Apartment_Application= new RM_Apartment_Application();
 	ob_start(); ?>
 	<form action="" name="" id="frmregister" method="post">
 		<table width="550" cellspacing="2" cellpadding="2" class="content">
@@ -179,7 +179,7 @@ public function email_favorites_to_friends(){
 			<tr>
 			  <td width="237" valign="top" align="right" class="content"><font color="#8a2529">* </font><?php echo __('Message :' ,'ar') ;?></td>
 			  <td>
-			  <textarea  id="message" rows="10" id="message" name="message" required> <?php echo$CF_AR_Apartment_Application->abr_retrieve_favourites();?>
+			  <textarea  id="message" rows="10" id="message" name="message" required> <?php echo$RM_Apartment_Application->abr_retrieve_favourites();?>
 			</textarea>
 			</td>
 			</tr>
@@ -212,4 +212,4 @@ public function email_favorites_to_friends(){
 	}
 	
 }
-add_action('plugins_loaded',array('CF_AR_Apartment_Application','init'));
+add_action('plugins_loaded',array('RM_Apartment_Application','init'));

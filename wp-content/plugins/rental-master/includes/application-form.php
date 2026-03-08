@@ -13,7 +13,7 @@
 * Desscription: Creates a menu to display Application form input
 */
 function abr_application_menu(){
-	add_menu_page(__('Application Form','ar'),__('Application Form','ar'),'administrator','abr-application-form','abr_application_form_page',ABR_PLUGIN_DIR_URL.'/img/application-from.png',0);
+	add_menu_page(__('Application Form','ar'),__('Application Form','ar'),'administrator','abr-application-form','abr_application_form_page','dashicons-media-document',0);
 }
 add_action( 'admin_menu', 'abr_application_menu' );
 	

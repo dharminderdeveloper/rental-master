@@ -280,12 +280,12 @@ Darkbox
  .quick_info_item{
 	width:33.33%;	
  }
- .cf_info_image{
+ .rm_info_image{
 	float:left;
     margin-right:10px;		
 }
  
-.cf_item_icon:before{
+.rm_item_icon:before{
 	content: '\e082'; 
 	border: 1px solid red;
 	font-family: zmod-icon-set1 !important;

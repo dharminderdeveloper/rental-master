@@ -1,25 +1,25 @@
 <?php
 
 /******************************************************
-*	Page: about-rentals-help
+*	Page: rental-masters-help
 *
-* 	Description: (About Rentals Help) menu for user help
+* 	Description: (Rental Master Help) menu for user help
 *
 ******************************************************/
 
 	/**
-	* Function: About Rentals Help Menu
+	* Function: Rental Master Help Menu
 	*
 	* Desscription: Creates a menu to display user help page
 	*/
 	add_action( 'admin_menu', 'abr_about_rental_help_menu' );
 	function abr_about_rental_help_menu(){
-		add_menu_page(__('About Rentals Help','ar'),__('About Rentals Help','ar'),'administrator','abr-user-help','abr_help_page',ABR_PLUGIN_DIR_URL.'/img/help-icon.png',0);
+		add_menu_page(__('Rental Master Help','ar'),__('Rental Master Help','ar'),'administrator','abr-user-help','abr_help_page','dashicons-sos',0);
 	}
 	
 	function abr_help_page(){
 		$content	 ='';
-		$content	.=	'<h1>About Rentals User Help Section</h1>';
+		$content	.=	'<h1>Rental Master User Help Section</h1>';
 		$content	.=	'<div class="welcome-panel">';
 		$content 	.=	abr_is_about_end();
 		$content 	.=	abr_premium_package_notification();
@@ -116,7 +116,7 @@
 		$content	=	'';
 		$content	.=	'<div style="text-align:center">';
 		$content	.=		'<h2 style="color:#FF0000"> Your licence will be expire in '.$status.' days	</h2>';
-		$content	.=		'<h3>To Continue the Service Please Renew Your Monthly <a href="'.ABR_PLUGIN_MASTER_URL.'">Subscription</a><h3>';
+		$content	.=		'<h3>To Continue the Service Please Renew Your Monthly <a href="'.RM_PLUGIN_MASTER_URL.'">Subscription</a><h3>';
 		$content	.=	'</div>';
 		return $content;
 	}
@@ -131,12 +131,18 @@
 
 
 	function abr_retrieve_content(){
-		$url = ABR_PLUGIN_MASTER_URL.'wp-admin/admin-ajax.php?action=abr_page_html&page_slug=plugin-page-html';
+		$url = RM_PLUGIN_MASTER_URL.'wp-admin/admin-ajax.php?action=abr_page_html&page_slug=plugin-page-html';
 		$request	=	wp_remote_get($url);
+		if ( is_wp_error( $request ) ) {
+			return null;
+		}
 		$response	=	wp_remote_retrieve_body( $request );
 		$obj		=	json_decode( $response,true);
-		$response	=	$obj['response'];
-		$content	=	$obj['content'];
+		if ( ! is_array( $obj ) ) {
+			return null;
+		}
+		$response	=	isset( $obj['response'] ) ? $obj['response'] : null;
+		$content	=	isset( $obj['content'] ) ? $obj['content'] : null;
 		if($content){
 			return $content;
 		}
@@ -155,10 +161,16 @@
 		$domain	=	get_option('abr_domain', false);
 
 		if((!empty($key))&&(!empty($domain))){
-			$url =ABR_PLUGIN_MASTER_URL.'wp-admin/admin-ajax.php?action=activation_ajax&key='.$key.'&domain='.$domain;
+			$url =RM_PLUGIN_MASTER_URL.'wp-admin/admin-ajax.php?action=activation_ajax&key='.$key.'&domain='.$domain;
 			$request	=	wp_remote_get($url);
+			if ( is_wp_error( $request ) ) {
+				return;
+			}
 			$response	=	wp_remote_retrieve_body( $request );
 			$obj		=	json_decode( $response,true);
+			if ( ! is_array( $obj ) || ! isset( $obj['key_status'] ) ) {
+				return;
+			}
 			$key_status=	$obj['key_status'];
 			$key		=	get_option('abr_key');
 			
@@ -177,7 +189,7 @@
 	function abr_admin_notice() {
 		?>
 		<div class="notice notice-warning  is-dismissible">
-			<p><?php _e( '&nbsp; Your Premium Pack has expired or temporarily disabled by your administrator. For any query please contact with plugin <a href="'.ABR_PLUGIN_MASTER_URL.'">administration</a>', 'abr' ); ?></p>
+			<p><?php _e( '&nbsp; Your Premium Pack has expired or temporarily disabled by your administrator. For any query please contact with plugin <a href="'.RM_PLUGIN_MASTER_URL.'">administration</a>', 'abr' ); ?></p>
 		</div>
 		<?php
 	}
