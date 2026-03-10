@@ -8,11 +8,7 @@ class Cf_Abr_Apartment{
     }
 	
 	public function __construct(){
-		#abtrv= about rental version
-		 $version	=	get_option('abtrv', false);
-		if(($version==1)||($version==2)){
-			add_action('init',array($this,'abr_apartment_init'));
-		}
+		add_action('init',array($this,'abr_apartment_init'));
 		add_action('init',array($this,'abr_create_apartment_taxonomies'),0);
 		add_action('cmb2_admin_init',array($this,'rm_apartment_register_metabox'));
 		add_action('admin_menu',array($this,'abr_remove_apartment_meta_box'));

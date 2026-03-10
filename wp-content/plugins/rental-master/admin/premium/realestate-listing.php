@@ -122,7 +122,7 @@ add_shortcode('ar_realestate_listing','abr_realestate_listing');
 			}
 			$out.='</ul>';
 		}
-		$out.=abr_rm_num_pagination($totalPages);
+		$out.=RM_Pagination::render($totalPages);
 		$out.='</div>';
 	}
 	else{

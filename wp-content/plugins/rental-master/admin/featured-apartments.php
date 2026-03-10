@@ -35,7 +35,7 @@ function abr_featured_apartments(){
 			$out.=abr_apartment_post($mpost);
 		}
 		$out.='</ul>';
-		$out.=abr_rm_num_pagination($totalPages);
+		$out.=RM_Pagination::render($totalPages);
 		$out.='</div>';
 	}
 	return $out;

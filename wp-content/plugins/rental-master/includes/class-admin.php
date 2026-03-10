@@ -34,6 +34,10 @@ class RM_Admin {
 		'ar_apartments_Of_Specific_Community' => 'Apartments by community',
 		'ar_search_listing'              => 'Advanced search',
 		'ar_realestate_listing'          => 'Real estate listing',
+		'rental_listings'                => 'Modern rental listings',
+		'rental_search'                  => 'Modern rental search',
+		'rental_map'                     => 'Modern rental map',
+		'rental_sidebar_filters'         => 'Modern sidebar filters',
 	);
 
 	/**
@@ -132,6 +136,15 @@ class RM_Admin {
 			$this->capability,
 			'rm-ui-settings',
 			array( $this, 'render_ui_settings_page' )
+		);
+
+		add_submenu_page(
+			'rm-dashboard',
+			__( 'Application Form', 'ar' ),
+			__( 'Application Form', 'ar' ),
+			$this->capability,
+			'rm-application-form',
+			array( $this, 'render_application_form_page' )
 		);
 
 		add_submenu_page(
@@ -266,6 +279,31 @@ class RM_Admin {
 			array( $this, 'render_ui_animation_field' ),
 			'rm-ui-settings',
 			'rm_ui_main'
+		);
+
+		register_setting(
+			'rm_application_settings_group',
+			'abr_applicationFormInput',
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => array( $this, 'sanitize_application_form_url' ),
+				'default'           => '',
+			)
+		);
+
+		add_settings_section(
+			'rm_application_main',
+			__( 'Application Form', 'ar' ),
+			array( $this, 'render_application_section_description' ),
+			'rm-application-form'
+		);
+
+		add_settings_field(
+			'abr_applicationFormInput',
+			__( 'Application Form Link', 'ar' ),
+			array( $this, 'render_application_form_field' ),
+			'rm-application-form',
+			'rm_application_main'
 		);
 	}
 
@@ -435,6 +473,29 @@ class RM_Admin {
 	}
 
 	/**
+	 * Render application form settings page.
+	 *
+	 * @return void
+	 */
+	public function render_application_form_page() {
+		$this->assert_capability();
+		$this->render_page_header(
+			__( 'Application Form', 'ar' ),
+			__( 'Store the external application form link displayed on listing pages.', 'ar' )
+		);
+		?>
+		<form method="post" action="options.php" class="rm-admin-card">
+			<?php
+			settings_fields( 'rm_application_settings_group' );
+			do_settings_sections( 'rm-application-form' );
+			submit_button( __( 'Save Application Form', 'ar' ) );
+			?>
+		</form>
+		<?php
+		echo '</div>';
+	}
+
+	/**
 	 * Render shortcode reference page.
 	 *
 	 * @return void
@@ -554,6 +615,44 @@ class RM_Admin {
 			return 200;
 		}
 		return $number;
+	}
+
+	/**
+	 * Render application form section description.
+	 *
+	 * @return void
+	 */
+	public function render_application_section_description() {
+		echo '<p>' . esc_html__( 'Provide the public URL for the external application form.', 'ar' ) . '</p>';
+	}
+
+	/**
+	 * Render application form URL field.
+	 *
+	 * @return void
+	 */
+	public function render_application_form_field() {
+		$value = (string) get_option( 'abr_applicationFormInput', '' );
+		printf(
+			'<input type="url" class="regular-text" name="abr_applicationFormInput" value="%s" placeholder="%s" />',
+			esc_attr( $value ),
+			esc_attr__( 'https://example.com/application', 'ar' )
+		);
+	}
+
+	/**
+	 * Sanitize application form URL.
+	 *
+	 * @param mixed $value Raw input.
+	 *
+	 * @return string
+	 */
+	public function sanitize_application_form_url( $value ) {
+		$value = trim( (string) $value );
+		if ( '' === $value ) {
+			return '';
+		}
+		return esc_url_raw( $value );
 	}
 
 	/**

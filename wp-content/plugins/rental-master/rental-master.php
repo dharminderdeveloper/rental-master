@@ -58,6 +58,9 @@ require_once RM_PLUGIN_DIR_PATH . 'includes/class-ajax.php';
 require_once RM_PLUGIN_DIR_PATH . 'includes/class-search.php';
 require_once RM_PLUGIN_DIR_PATH . 'includes/class-google-maps.php';
 require_once RM_PLUGIN_DIR_PATH . 'includes/class-listings.php';
+require_once RM_PLUGIN_DIR_PATH . 'includes/class-pagination.php';
+require_once RM_PLUGIN_DIR_PATH . 'includes/class-dynamic-pages.php';
+require_once RM_PLUGIN_DIR_PATH . 'includes/class-availability-manager.php';
 require_once RM_PLUGIN_DIR_PATH . 'includes/class-plugin.php';
 
 register_activation_hook( RM_PLUGIN_FILE, array( 'RM_Activator', 'activate' ) );

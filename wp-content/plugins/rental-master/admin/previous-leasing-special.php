@@ -7,11 +7,8 @@ class RM_Previous_Leasing_Special{
     }
 	
 	public function __construct(){
-		$version	=	get_option('abtrv', false);
-		if(($version==1)||($version==2)){
-			add_action( 'admin_menu',array($this,'abr_previous_leasing_special_menu'));		
-			add_action('init',array($this,'abr_previous_leasing_special_init'));
-		}		
+		add_action( 'admin_menu',array($this,'abr_previous_leasing_special_menu'));		
+		add_action('init',array($this,'abr_previous_leasing_special_init'));
 		
 		add_action('cmb2_admin_init',array($this,'rm_previous_leasing_special_register_metabox'));
 		

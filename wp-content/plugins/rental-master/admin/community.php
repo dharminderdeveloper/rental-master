@@ -7,10 +7,7 @@ class RM_Community{
         new $class;
     }
 	public function __construct(){
-		$version	=	get_option('abtrv', false);
-		if(($version==1)||($version==2)){
-			add_action('init',array($this,'abr_community_init'),0);
-		}
+		add_action('init',array($this,'abr_community_init'),0);
 		add_action('init',array($this,'create_community_taxonomies'),0);		
 		add_action('admin_menu',array($this,'remove_community_meta_box'));
 		add_action('cmb2_admin_init',array($this,'rm_community_register_metabox'));

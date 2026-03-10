@@ -52,7 +52,7 @@ class RM_Apartments_Of_Spec_Comm{
 					$out.=abr_apartment_post($mpost);
 				}
 				$out.='</ul>';
-				$out.=abr_rm_num_pagination($totalPages);
+				$out.=RM_Pagination::render($totalPages);
 				return $out;
 			}
 		}

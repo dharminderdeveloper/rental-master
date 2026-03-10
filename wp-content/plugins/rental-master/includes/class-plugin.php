@@ -69,6 +69,8 @@ class RM_Plugin {
 		$this->services['search']      = new RM_Search();
 		$this->services['google_maps'] = new RM_Google_Maps();
 		$this->services['listings']    = new RM_Listings();
+		$this->services['dynamic_pages'] = new RM_Dynamic_Pages();
+		$this->services['availability_manager'] = new RM_Availability_Manager();
 	}
 
 	/**

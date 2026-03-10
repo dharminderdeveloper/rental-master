@@ -11,7 +11,6 @@ class About_rental_rm_exe{
 		add_action('wp_enqueue_scripts',array($this,'about_rentals_common_css'));
 		add_action( 'wp_enqueue_scripts',array($this,'rm_jqueryvalidation'));
 		add_action('admin_enqueue_scripts', array($this,'about_rental_admin_js'));
-		add_action('wp_enqueue_scripts', array($this,'about_rental_admin_js'));
 		add_action('wp_footer',array($this,'ajax_url_for_js'));
 		add_action('admin_footer',array($this,'ajax_url_for_js'));
 		add_filter('custom_menu_order',array($this,'custom_menu_order') );
@@ -20,11 +19,17 @@ class About_rental_rm_exe{
 	}
 
 	public function ajax_url_for_js(){
+		if ( ! $this->should_enqueue_public_assets() && ! is_admin() ) {
+			return;
+		}
 	 ?><script>wp_ajax_url = function(){ return '<?php echo admin_url('admin-ajax.php'); ?>'; }</script><?php
 	}
 
 	# Common css
 	public function about_rentals_common_css(){
+		if ( ! $this->should_enqueue_public_assets() ) {
+			return;
+		}
 		wp_register_style('rental-masters-common',RM_PLUGIN_DIR_URL.'/css/ar.css',false,false);
 		wp_enqueue_style('rental-masters-common');
 		wp_register_style('css-flexslider',RM_PLUGIN_DIR_URL.'/css/flexslider.css');
@@ -32,17 +37,28 @@ class About_rental_rm_exe{
 	}
 	
 	public function rm_jqueryvalidation() {
+		if ( ! $this->should_enqueue_public_assets() ) {
+			return;
+		}
 		wp_register_script('jq-validate-jquery', RM_PLUGIN_DIR_URL.'/js/jquery.validate.min.js', array('jquery'), '1.15.0',false);
 		wp_enqueue_script('jq-validate-jquery');
-		$mapAPI='AIzaSyCO57Oj_U92hCIFW_Eb-VI4CCarxNH4AC8';
-		wp_register_script('jq-google-map-api','https://maps.googleapis.com/maps/api/js?key='.$mapAPI, array('jquery'),'1.15.0',false);
-		wp_enqueue_script('jq-google-map-api');
+		$mapAPI = (string) get_option( 'abr_google_maps_api_key', '' );
+		if ( '' === $mapAPI && defined( 'RM_MAP_API_KEY' ) ) {
+			$mapAPI = (string) RM_MAP_API_KEY;
+		}
+		if ( '' !== $mapAPI ) {
+			wp_register_script('jq-google-map-api','https://maps.googleapis.com/maps/api/js?key='.$mapAPI, array('jquery'),'1.15.0',false);
+			wp_enqueue_script('jq-google-map-api');
+		}
 		wp_register_script('jq-marker-clusterer',RM_PLUGIN_DIR_URL.'/js/markerclusterer.js',array('jquery'),'4.5.2',false);
 		wp_enqueue_script('jq-marker-clusterer');
 	}
 	
 	# darkbox js
 	public function about_rentals_darkbox(){
+		if ( ! $this->should_enqueue_public_assets() ) {
+			return;
+		}
 		wp_register_script('popup_darkbox', RM_PLUGIN_DIR_URL.'/js/jquery.darkbox.js',array('jquery'),false);
 		wp_enqueue_script('popup_darkbox');
 		wp_register_script('flexslider-js', RM_PLUGIN_DIR_URL.'/js/jquery.flexslider.js',array('jquery'),false);
@@ -107,8 +123,39 @@ class About_rental_rm_exe{
 	}
 
 	public function custom_query_variable($vars) {
-		$vars[] .= 'paged';		
+		$vars[] = 'paged';		
 		return $vars;
+	}
+
+	private function should_enqueue_public_assets() {
+		if ( ! is_singular() ) {
+			return (bool) apply_filters( 'rm_legacy_public_assets_needed', false, null );
+		}
+		$post = get_post();
+		if ( ! $post ) {
+			return (bool) apply_filters( 'rm_legacy_public_assets_needed', false, null );
+		}
+		$shortcodes = apply_filters(
+			'rm_legacy_shortcodes',
+			array(
+				'ar_apartment_listing',
+				'ar_community_listing_default',
+				'ar_featured_apartments',
+				'ar_leasing_specials',
+				'ar_apartment_application_form',
+				'ar_email_favorites_to_friends',
+				'ar_my_favorites_apartment',
+				'ar_apartments_Of_Specific_Community',
+				'ar_search_listing',
+				'ar_realestate_listing',
+			)
+		);
+		foreach ( (array) $shortcodes as $shortcode ) {
+			if ( has_shortcode( $post->post_content, $shortcode ) ) {
+				return true;
+			}
+		}
+		return (bool) apply_filters( 'rm_legacy_public_assets_needed', false, $post );
 	}
 }
 
@@ -147,9 +194,11 @@ include(RM_PLUGIN_DIR_PATH.'cmb2/add-on/date-range-field/wds-cmb2-date-range-fie
 include(RM_PLUGIN_DIR_PATH.'cmb2/add-on/cmb_field_map/cmb-field-map.php');
 
 /**----------	Includes	----------**/
-include(RM_PLUGIN_DIR_PATH.'includes/application-form.php');
-include(RM_PLUGIN_DIR_PATH.'includes/shortcodes.php');
-include(RM_PLUGIN_DIR_PATH.'includes/pagination.php');
 
-/**----------	Premium Feature	----------**/
-include(RM_PLUGIN_DIR_PATH.'admin/premium/premium-init.php');
+/**----------	Legacy Premium Features (now free)	----------**/
+include(RM_PLUGIN_DIR_PATH.'admin/premium/previous-leasing-special.php');
+include(RM_PLUGIN_DIR_PATH.'admin/premium/realestate.php');
+include(RM_PLUGIN_DIR_PATH.'admin/premium/single-realestate.php');
+include(RM_PLUGIN_DIR_PATH.'admin/premium/realestate-listing.php');
+include(RM_PLUGIN_DIR_PATH.'admin/premium/search-feature.php');
+include(RM_PLUGIN_DIR_PATH.'widget/realestate-widgets.php');

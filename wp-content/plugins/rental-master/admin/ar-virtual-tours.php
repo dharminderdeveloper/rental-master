@@ -11,10 +11,7 @@ class AR_Virtual_Tours{
 		add_action('save_post',array($this,'abr_virtual_tours_save'),1, 2);
 		add_action('wp_ajax_ar_virtual_tour_unzip_ajax',array($this,'ar_virtual_tour_unzip_ajax'));
 		add_action('wp_ajax_nopriv_ar_virtual_tour_unzip_ajax',array($this,'ar_virtual_tour_unzip_ajax'));
-		 $version	=	get_option('abtrv', false);
-		if(($version==1)||($version==2)){
-			add_action( 'init',array($this,'abr_virtualtour_post_type'), 0 );
-		}
+		add_action( 'init',array($this,'abr_virtualtour_post_type'), 0 );
 		add_action('admin_print_scripts',array($this,'abr_virtual_tour_admin_scripts'));
 		add_action('admin_print_styles',array($this,'abr_virtual_tour_admin_styles'));
 	}

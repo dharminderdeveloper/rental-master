@@ -122,7 +122,7 @@ add_shortcode('ar_apartment_listing','abr_apartment_listing');
 			}
 			$out.='</ul>';
 		}
-		$out.=abr_rm_num_pagination($totalPages);
+		$out.=RM_Pagination::render($totalPages);
 		$out.='</div>';
 	}
 	else{

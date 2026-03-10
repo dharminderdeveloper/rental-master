@@ -7,11 +7,7 @@ class RM_Leasing_Special{
     }
             	
 	public function __construct(){		
-		$version	=	get_option('abtrv', false);
-
-		if(($version==1)||($version==2)){
-			add_action('init',array($this,'abr_leasing_special_init'));
-		}				
+		add_action('init',array($this,'abr_leasing_special_init'));
 
 		RM_Leasing_Special::update_leasing_special_date_column();
 		RM_Leasing_Special::get_expired_leasing_special();
