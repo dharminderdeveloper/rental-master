@@ -105,6 +105,15 @@ class RM_Admin {
 
 		add_submenu_page(
 			'rm-dashboard',
+			__( 'User Help', 'ar' ),
+			__( 'User Help', 'ar' ),
+			$this->capability,
+			'abr-user-help',
+			array( $this, 'render_legacy_user_help_page' )
+		);
+
+		add_submenu_page(
+			'rm-dashboard',
 			__( 'Listings', 'ar' ),
 			__( 'Listings', 'ar' ),
 			'edit_posts',
@@ -400,6 +409,41 @@ class RM_Admin {
 		</div>
 		<?php
 		do_action( 'rm_after_dashboard_render' );
+		echo '</div>';
+	}
+
+	/**
+	 * Render legacy user help page during the migration period.
+	 *
+	 * @return void
+	 */
+	public function render_legacy_user_help_page() {
+		$this->assert_capability();
+		$this->render_page_header(
+			__( 'User Help', 'ar' ),
+			__( 'Temporary compatibility page while legacy screens are being moved into the new admin structure.', 'ar' )
+		);
+		?>
+		<div class="rm-admin-grid">
+			<div class="rm-admin-card">
+				<h2><?php esc_html_e( 'Migration Status', 'ar' ); ?></h2>
+				<p><?php esc_html_e( 'The old system is still available for now, but the new Availability Manager is the preferred place to work.', 'ar' ); ?></p>
+				<p>
+					<a class="button button-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=availability-manager' ) ); ?>">
+						<?php esc_html_e( 'Open Availability Manager', 'ar' ); ?>
+					</a>
+				</p>
+			</div>
+			<div class="rm-admin-card">
+				<h2><?php esc_html_e( 'Next Steps', 'ar' ); ?></h2>
+				<ul>
+					<li><?php esc_html_e( 'Extract remaining legacy features into OOP classes.', 'ar' ); ?></li>
+					<li><?php esc_html_e( 'Keep the old entry point available until migration is complete.', 'ar' ); ?></li>
+					<li><?php esc_html_e( 'Remove the compatibility page after the move is finished.', 'ar' ); ?></li>
+				</ul>
+			</div>
+		</div>
+		<?php
 		echo '</div>';
 	}
 
