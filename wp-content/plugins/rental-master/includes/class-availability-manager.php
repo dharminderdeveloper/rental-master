@@ -48,11 +48,11 @@ class RM_Availability_Manager {
 			return;
 		}
 
-		$css_file = RM_PLUGIN_DIR_PATH . 'admin/premium/css/abr-premium.css';
+		$css_file = RM_PLUGIN_DIR_PATH . 'admin/css/availability-manager.css';
 		if ( file_exists( $css_file ) ) {
 			wp_enqueue_style(
 				'rm-availability',
-				RM_PLUGIN_DIR_URL . 'admin/premium/css/abr-premium.css',
+				RM_PLUGIN_DIR_URL . 'admin/css/availability-manager.css',
 				array(),
 				(string) filemtime( $css_file )
 			);

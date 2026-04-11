@@ -10,7 +10,6 @@
 
 	<exclude-pattern>*/cmb2/*</exclude-pattern>
 	<exclude-pattern>*/add-on/*</exclude-pattern>
-	<exclude-pattern>*/admin/premium/*</exclude-pattern>
 	<exclude-pattern>*/admin/*.php</exclude-pattern>
 	<exclude-pattern>*/widget/*</exclude-pattern>
 	<exclude-pattern>*/rm-exe.php</exclude-pattern>

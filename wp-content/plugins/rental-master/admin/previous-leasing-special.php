@@ -6,14 +6,14 @@ class RM_Previous_Leasing_Special{
         new $class;
     }
 	
-	public function __construct(){
-		add_action( 'admin_menu',array($this,'abr_previous_leasing_special_menu'));		
+	public function __construct(){		
+		add_action( 'admin_menu',array($this,'abr_previous_leasing_special_menu'));	
 		add_action('init',array($this,'abr_previous_leasing_special_init'));
-		
-		add_action('cmb2_admin_init',array($this,'rm_previous_leasing_special_register_metabox'));
-		
+		add_action( 'wp_ajax_download_leasing',array($this,'downloadLesingFile' ) );
+
+		add_action('cmb2_admin_init',array($this,'rm_previous_leasing_special_register_metabox'));		
 	}
-	
+
 	/**
 	 *	@description	This function will register "Previous Leasing Special"
 	 *					custom post type. 
@@ -67,7 +67,7 @@ class RM_Previous_Leasing_Special{
 	 *	@return 		POST ID 	This will be Id of newly inserted record.
 	 *					
 	 */				
-	public function save_previous_leasing_special($plSpecial, $status ){
+	public static function save_previous_leasing_special($plSpecial, $status ){
 		$post_data = array(
 				'post_title' 	=> $plSpecial[ 'title' ],
 				'post_content' 	=> $plSpecial[ 'description' ],
@@ -101,7 +101,13 @@ class RM_Previous_Leasing_Special{
 
 	function rm_previous_leasing_special(){
 		?>
-		<h1><?php echo __('Previous Leasing Special','ar'); ?></h1>
+		
+		<div class="pr-leasing-header">
+			<div class="pr-leasing-left"><h1><?php echo __('Previous Leasing Special','ar'); ?></h1></div>	
+			<div class="pr-leasing-right"><input type="button" class="button" id="download_pr_csv" value="Export Previous Leasing" /></div>	
+		</div>
+		<div class="clear"></div>
+																				
 		<div class="pr-leasing-special"">
 		<?php echo RM_Previous_Leasing_Special::abr_previous_leasing_special_content();?>
 		</div><!--/*welcome-panel Ends*/-->
@@ -116,49 +122,120 @@ class RM_Previous_Leasing_Special{
 
 	function abr_previous_leasing_special_content(){
 		//	Get All Expired Leasing Special
-		$today = date('m/d/Y');
+		$today = date('m/d/Y');		
+		$paged = ( isset( $_GET['paged'] ) ) ? $_GET['paged']: '1';	
+
 		$cc_args = array(
-			'posts_per_page'   =>	-1,
+			'paged'            =>   $paged,
+    		'posts_per_page'   =>   '-1',
 			'post_type'        =>	'previous-leasing'			
 		);		
 		
 		$previous_leasing_list	=	new WP_Query( $cc_args );			
-	
-		
+
+		$fileName 	=	RM_PLUGIN_DIR_PATH.'admin/downloadablefiles/';		
+		$file = fopen($fileName.'previousleasing.csv', 'w');
+		 
+		// save the column headers
+		fputcsv($file, array('Name', 'Publish Date', 'Expired Date', 'Log Status', 'Description'));		
 ?>
+		<script type="text/javascript">
+			jQuery( document ).ready(function(){		
+				jQuery( '#download_pr_csv' ).click(function(){
+					window.location.href = '<?php echo admin_url('admin-ajax.php'); ?>?action=download_leasing';					
+				});
+				
+				jQuery( ".listing_read_more" ).click(function(){						
+					//	Get Listing Title
+					var lTitle 	=	jQuery( this ).attr( 'listing_title' );
+
+					//	Get description Id Variable
+					var descID 	=	jQuery( this ).attr( 'desc_id' );
+
+					//	Get Original Description
+					var oDescription =	jQuery( '#'+descID ).val();	
+										
+					swal({
+						  title: "<i>"+lTitle+"</i>", 
+						  html: ""+oDescription,  
+						  confirmButtonText: "OK", 
+					});		
+				});
+			});
+		</script>		
 		<ul class="availHead">
 			<li class="welcome-panel">
-			<span><?php echo __('Name','ar'); ?></span>
-			<span><?php echo __('Publish Date','ar'); ?></span>
-			<span><?php echo __('Expired Date','ar'); ?></span>
-			<span><?php echo __('Log Status','ar'); ?></span>
-			<span><?php echo __('Description','ar'); ?></span>
-			<span><?php echo __('Action','ar'); ?></span>			
+				<span class="minWidth"><?php echo __('Name','ar'); ?></span>
+				<span class="minWidth"><?php echo __('Publish Date','ar'); ?></span>
+				<span class="minWidth"><?php echo __('Expired Date','ar'); ?></span>
+				<span class="minWidth"><?php echo __('Log Status','ar'); ?></span>
+				<span class="minWidth"><?php echo __('Description','ar'); ?></span>
+				<!--<span><?php echo __('Action','ar'); ?></span>-->			
 			</li>
 <?php
 			if( $previous_leasing_list->posts  <= 0 ){
 ?>
 				
 <?php				
-			}else{										
-				foreach( $previous_leasing_list->posts as $listing ){						
-					$publish_date 	=	get_post_meta($listing->ID,'rm_previous_leasing_publish_date', true);
-					$expire_date 	=	get_post_meta($listing->ID,'rm_previous_leasing_expire_date', true);	
-					$desc 			=	get_post_meta($listing->ID,'rm_previous_leasing_description', true);
+			}else{														
+				foreach( $previous_leasing_list->posts as $listing ){	
+					//	Get Previous Leasing Title
+					$prTitle 		=	__($listing->post_title,'ar');		
+
+					$publish_date 	=	get_post_meta($listing->ID,'rm_previous_leasing_publish_date', true);										
+					$expire_date 	=	get_post_meta($listing->ID,'rm_previous_leasing_expire_date', true);					
+
+					$oDesc 			=	get_post_meta($listing->ID,'rm_previous_leasing_description', true);
+
+					//	Strip All Images	
+    				$desc 			= preg_replace("/<img[^>]+\>/i", " ", $oDesc); 
+
+					//	Count length of the string
+					$descLength 	=	strlen( $oDesc );
+
+					//	Encode Special Chars	
+					$oDesc 			=	htmlspecialchars( $oDesc );
+
+					if( $descLength > 100){
+						$readMore 	=	'<a class="listing_read_more" listing_title="'.__($listing->post_title,'ar').'" desc_id="listing'.$listing->ID.'" href="#">Read More</a>';
+					}else{
+						$readMore 	=	'';
+					}
+
 					$status			=	get_post_meta($listing->ID,'rm_previous_leasing_status', true);
-	
+
+					$csvRow			=	array( $prTitle,$publish_date,$expire_date,$status,$desc );
+
+					fputcsv($file, $csvRow);
 ?>			
-					<li pid="<?php echo $listing->ID; ?>">
-					<span><a href="<?php echo get_permalink( $listing->ID ); ?>" > <?php echo __($listing->post_title,'ar'); ?> </a></span>
-					<span><?php echo $publish_date;  ?></span>
-					<span><?php echo $expire_date;  ?></span>
-					<span><?php echo ucfirst($status);	?></span>					
-					<span><?php echo $desc;  ?></span>					
-					<span><a href="javascript:void(0)" class="button button-primary button-large updateApartment" ><?php echo __('Update','ar');?></a></span>
+					<input type="hidden" id="listing<?php echo $listing->ID; ?>" value="<?php echo $oDesc; ?>" /> 
+					<li pid="<?php echo $listing->ID; ?>" style="min-width:20% !important;">
+						<!--<span><a href="<?php echo get_permalink( $listing->ID ); ?>" > <?php echo __($listing->post_title,'ar'); ?> </a></span>-->
+						<span class="minWidth"><?php echo $prTitle; ?></span>
+						<span class="minWidth"><?php echo $publish_date;  ?></span>
+						<span class="minWidth"><?php echo $expire_date;  ?></span>
+						<span class="minWidth"><?php echo ucfirst($status);	?></span>					
+						<span class="minWidth"><?php echo substr($desc,0,100);  ?><?php echo ' '.$readMore; ?></span>					
+						<!--<span><a href="javascript:void(0)" class="button button-primary button-large updateApartment" ><?php echo __('Update','ar');?></a></span>-->
 					</li>
 <?php
 				}
+			
+				echo '<li>';
+				$big = 999999999; // need an unlikely integer
+				$translated = __( 'Page', 'ar' ); // Supply translatable string				
+				
+				echo paginate_links( array(
+					'base' => admin_url( 'edit.php?post_type=leasing&page=previous-leasing-special&paged=%#%' ),				
+					'current' => max( 1, $paged ),
+					'total'   => $previous_leasing_list->max_num_pages,
+				        'before_page_number' => '<span class="screen-reader-text">'.$translated.' </span>'
+				) );
+				echo '</li>';
 			}
+
+			// Close the file
+			fclose($file);
 ?>				
 		</ul>
 <?php	
@@ -199,6 +276,50 @@ class RM_Previous_Leasing_Special{
 			'show_option_none' =>false,
 			'options'          => Cf_Abr_Apartment::get_apartment_id_title_ARR()
 		));
+	}
+
+	/**
+	 *	@description 	This function will write the previous leasing 
+	 *					records and make a csv file for same.
+	 *	
+	 *	@param 			Record 	This will be a array of record to insert
+	 * 	
+	 * 	@return 		True 	When csv will be created
+	 *					False 	When csv will not be created	
+	 */
+
+	public function writeLeasingRecords( $record = '' ){
+
+	}
+
+	/**
+	 *	@description 	This function will download the csv file for previous
+	 *					leasing special records.
+	 *
+	 *	@param 			File 	This will be the file name that needs to be 
+	 * 				 	downloaded.
+	 *
+	 * 	@return 		True 	When csv will be created
+	 *					False 	When csv will not be created	
+	 */
+
+	public function downloadLesingFile(){		
+		$file  = RM_PLUGIN_DIR_PATH.'admin/downloadablefiles/previousleasing.csv';
+
+		if(file_exists($file)){
+            header('Content-Description: File Transfer');
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename='.basename($file));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            ob_clean();
+            flush();
+            readfile($file);
+            exit;
+		}
 	}
 }
 

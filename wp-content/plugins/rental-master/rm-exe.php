@@ -196,9 +196,8 @@ include(RM_PLUGIN_DIR_PATH.'cmb2/add-on/cmb_field_map/cmb-field-map.php');
 /**----------	Includes	----------**/
 
 /**----------	Legacy Premium Features (now free)	----------**/
-include(RM_PLUGIN_DIR_PATH.'admin/premium/previous-leasing-special.php');
-include(RM_PLUGIN_DIR_PATH.'admin/premium/realestate.php');
-include(RM_PLUGIN_DIR_PATH.'admin/premium/single-realestate.php');
-include(RM_PLUGIN_DIR_PATH.'admin/premium/realestate-listing.php');
-include(RM_PLUGIN_DIR_PATH.'admin/premium/search-feature.php');
+include(RM_PLUGIN_DIR_PATH.'admin/features/realestate.php');
+include(RM_PLUGIN_DIR_PATH.'admin/features/single-realestate.php');
+include(RM_PLUGIN_DIR_PATH.'admin/features/realestate-listing.php');
+include(RM_PLUGIN_DIR_PATH.'admin/features/search-feature.php');
 include(RM_PLUGIN_DIR_PATH.'widget/realestate-widgets.php');
